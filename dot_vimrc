@@ -34,5 +34,4 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'pangloss/vim-javascript'
 call plug#end()
 " Apply theme
-colorscheme catppuccin_mocha
-
+silent! colorscheme catppuccin_mocha
