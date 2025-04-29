@@ -1,0 +1,32 @@
+" Tabs settings
+set expandtab
+set smarttab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+" Show line numbers
+set number
+" Enable syntax highlighting
+syntax on
+" Disable bells
+set noerrorbells
+set novisualbell
+" Enable mouse support
+set mouse=a
+" Highlight 110 collumn
+set colorcolumn=110
+set termguicolors
+" Plugins via https://github.com/junegunn/vim-plug
+call plug#begin()
+" Catppuccin theme
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+" Rust support
+Plug 'rust-lang/rust.vim'
+" Go support
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" JS support
+Plug 'pangloss/vim-javascript'
+call plug#end()
+" Apply theme
+colorscheme catppuccin_mocha
+
