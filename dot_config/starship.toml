@@ -1,0 +1,163 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Format
+format = """
+$directory\
+$hostname\
+$localip\
+$git_branch\
+$git_state\
+$package
+$os$sudo$character"""
+add_newline = false
+
+# Current theme
+palette = "catppuccin_mocha"
+
+# Character
+[character]
+format = "$symbol "
+success_symbol = '[\$](bold green)'
+error_symbol = '[\$](bold maroon)'
+vimcmd_symbol = '[V](bold green)'
+
+# Current package version
+[package]
+format = '[$version]($style) '
+style = "lavender bold"
+
+# Current directory
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
+style = "lavender bold"
+read_only_style = "peach"
+read_only = " R/O "
+truncation_length = 7
+
+# Hostname
+[hostname]
+ssh_only = false
+ssh_symbol = "#"
+format = "[$ssh_symbol$hostname]($style)"
+style = "mauve bold"
+
+# Git state
+[git_state]
+style = "bold teal"
+
+# SUDO
+[sudo]
+symbol = "SUDO "
+format = "[$symbol]($style)"
+disabled = false
+
+# Local IP address
+[localip]
+ssh_only = false
+format = '[@$localipv4](mauve bold) '
+disabled = false
+
+# Current OS
+[os]
+format = "[$symbol]($style)"
+style = "rosewater"
+disabled = false
+
+# Symbols for OS
+[os.symbols]
+# Android
+Android = 'A '
+# Windows
+Windows = "W "
+# macOS
+Macos = "M "
+# Linux and various distros
+# Default for Linux
+Linux = "L "
+# For distros
+AIX = "L "
+Alpaquita = "L "
+AlmaLinux = "L "
+Alpine = "L "
+Amazon = "L "
+Arch = "L "
+Artix = "L "
+CachyOS = "L "
+CentOS = "L "
+Debian = "L "
+DragonFly = "L "
+Emscripten = "L "
+EndeavourOS = "L "
+Fedora = "L "
+FreeBSD = "L "
+Garuda = "L "
+Gentoo = "L "
+HardenedBSD = "L "
+Illumos = "L "
+Kali = "L "
+Mabox = "L "
+Manjaro = "L "
+Mariner = "L "
+MidnightBSD = "L "
+Mint = "L "
+NetBSD = "L "
+NixOS = "L "
+Nobara = "L "
+OpenBSD = "L "
+OpenCloudOS = "L "
+openEuler = "L "
+openSUSE = "L "
+OracleLinux = "L "
+Pop = "L "
+Raspbian = "L "
+Redhat = "L "
+RedHatEnterprise = "L "
+RockyLinux = "L "
+Redox = "L "
+Solus = "L "
+SUSE = "L "
+Ubuntu = "L "
+Ultramarine = "L "
+Uos = "L "
+Void = "L "
+# Unknown
+Unknown = ""
+
+# Git branch
+[git_branch]
+symbol = '@'
+format = "[$symbol$branch(:$remote_branch)]($style) "
+truncation_length = 70
+truncation_symbol = ''
+style = "bold pink"
+
+# Themes
+# Catppuccin Mocha theme
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
