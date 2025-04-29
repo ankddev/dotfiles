@@ -22,16 +22,39 @@ if empty(glob(s:plug_path))
   autocmd VimEnter * ++once PlugInstall | source $MYVIMRC
 endif
 
-" Tabs settings
+" Space settings
 set expandtab
 set smarttab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+" Tabs settings
+set showtabline=2
 " Show line numbers
 set number
+" Highlight current line
+set cursorline
 " Enable syntax highlighting
 syntax on
+" Disable Vi compatibility
+set nocompatible
+" Search
+set incsearch
+" Show partial command you type in the last line of the screen.
+set showcmd
+" Show the mode you are on the last line.
+set showmode
+" Show matching words during a search.
+set showmatch
+" Use highlighting when doing a search.
+set hlsearch
+" Completion
+set wildmenu
+set wildmode=list:longest
+" Set the commands to save in history default number is 20.
+set history=1000
+filetype on
+filetype plugin indent on
 " Disable bells
 set noerrorbells
 set novisualbell
@@ -50,6 +73,18 @@ Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " JS support
 Plug 'pangloss/vim-javascript'
+" Airline
+Plug 'vim-airline/vim-airline'
 call plug#end()
 " Apply theme
 silent! colorscheme catppuccin_mocha
+" Hide mode
+set noshowmode
+" You can split a window into sections by typing `:split` or `:vsplit`.
+" Display cursorline and cursorcolumn ONLY in active window.
+augroup cursor_off
+        autocmd!
+            autocmd WinLeave * set nocursorline nocursorcolumn
+                autocmd WinEnter * set cursorline cursorcolumn
+augroup END
+
