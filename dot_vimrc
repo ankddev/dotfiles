@@ -28,6 +28,7 @@ set smarttab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set autoindent
 " Tabs settings
 set showtabline=2
 " Show line numbers
@@ -38,23 +39,54 @@ set cursorline
 syntax on
 " Disable Vi compatibility
 set nocompatible
-" Search
-set incsearch
 " Show partial command you type in the last line of the screen.
 set showcmd
 " Show matching words during a search.
 set showmatch
 " Use highlighting when doing a search.
 set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmatch
+" Allow hidden buffers
+set hidden
 " Clipboard control
 set clipboard=unnamedplus
 " Completion
 set wildmenu
 set wildmode=list:longest
+set wildignore=.docx,.jpg,.png,.gif,.pdf,.pyc,.exe,.flv,.img,.xlsx
+set nu
+set ruler
+" Turn backup off, since most stuff is in SVN, git etc. anyway...
+set nobackup
+set nowb
+set noswapfile
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <C-space> ?
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * silent! checktime
+" Undo
+set undofile
+set undodir=~/.temp
+" Save all buffers when Vim loses focus
+au FocusLost * silent! wa
 " Set the commands to save in history default number is 20.
 set history=1000
 filetype on
 filetype plugin indent on
+" Backspace setting
+set backspace=indent,eol,start whichwrap+=<,>,[,]
+" No wrap
+set nowrap
 " Disable bells
 set noerrorbells
 set novisualbell
