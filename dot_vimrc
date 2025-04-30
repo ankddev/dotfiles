@@ -42,8 +42,6 @@ set nocompatible
 set incsearch
 " Show partial command you type in the last line of the screen.
 set showcmd
-" Show the mode you are on the last line.
-set showmode
 " Show matching words during a search.
 set showmatch
 " Use highlighting when doing a search.
