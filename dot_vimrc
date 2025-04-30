@@ -84,7 +84,7 @@ set noshowmode
 " Display cursorline and cursorcolumn ONLY in active window.
 augroup cursor_off
         autocmd!
-            autocmd WinLeave * set nocursorline nocursorcolumn
-                autocmd WinEnter * set cursorline cursorcolumn
+            autocmd WinLeave * set nocursorline
+                autocmd WinEnter * set cursorline
 augroup END
 
