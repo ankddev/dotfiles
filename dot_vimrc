@@ -46,6 +46,8 @@ set showcmd
 set showmatch
 " Use highlighting when doing a search.
 set hlsearch
+" Clipboard control
+set clipboard=unnamedplus
 " Completion
 set wildmenu
 set wildmode=list:longest
