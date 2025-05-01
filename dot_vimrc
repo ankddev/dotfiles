@@ -74,6 +74,8 @@ set lazyredraw
 " Set to auto read when a file is changed from the outside
 set autoread
 au FocusGained,BufEnter * silent! checktime
+" Confirm before closing file with unsaved changes
+set confirm
 " Undo
 set undofile
 set undodir=~/.temp
