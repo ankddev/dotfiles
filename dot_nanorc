@@ -329,4 +329,3 @@ set functioncolor green
 #bind ^U "{mark}{home}{zap}" main
 #bind ^Z undo main
 #bind ^Y redo main
-include "C:/ProgramData/chocolatey/lib/nano-win/tools/syntax/*.nanorc"

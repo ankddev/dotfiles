@@ -6,12 +6,13 @@ Firstly, [install Chezmoi](https://www.chezmoi.io/install/). Then you can run fo
 chezmoi init https://github.com/ankddev/dotfiles
 ```
 ## What it includes
-This repo includes my `.` files for:
+This repo includes my dotfiles for:
 - Atom
 - Vim
 - Nano
 - WSL
 - Init.cmd (runs with CMD on Windows via Clink)
+- Few Clink scripts
 - Starship
 - gh-dash
 - gh-changelog
