@@ -2,4 +2,5 @@ README.md
 LICENSE
 {{ if ne .chezmoi.os "windows" }}
 AppData
+init.cmd
 {{ end }}
