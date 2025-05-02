@@ -23,7 +23,11 @@ if empty(glob(s:plug_path))
 endif
 
 " Set langauge to english
-language messages en
+if has('unix')
+    language messages C
+else
+    language messages en
+endif
 
 " Space settings
 set expandtab
