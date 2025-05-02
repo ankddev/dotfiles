@@ -15,4 +15,6 @@ This repo includes my `.` files for:
 - Starship
 - gh-dash
 - gh-changelog
+## License
+MIT License, see [LICENSE](./LICENSE) file.
 

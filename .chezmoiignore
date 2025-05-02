@@ -1,4 +1,5 @@
 README.md
+LICENSE
 {{ if ne .chezmoi.os "windows" }}
-AppData/Local/clink
+AppData
 {{ end }}
