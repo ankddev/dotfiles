@@ -1,3 +1,5 @@
+" VIM Config by ANKDDEV
+" https://github.com/ankddev/dotfiles
 " Determine the data directory for vim-plug installation
 if has('nvim')
   let s:data_dir = stdpath('data')
