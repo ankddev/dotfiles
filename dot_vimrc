@@ -118,6 +118,8 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'pangloss/vim-javascript'
 " Airline
 Plug 'vim-airline/vim-airline'
+" Wakatime
+Plug 'wakatime/vim-wakatime'
 call plug#end()
 " Apply theme
 silent! colorscheme catppuccin_mocha
