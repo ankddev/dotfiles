@@ -61,7 +61,7 @@ set showmatch
 " Allow hidden buffers
 set hidden
 " Clipboard control
-set clipboard=unnamedplus
+set clipboard=unnamed,unnamedplus
 " Completion
 set wildmenu
 set wildmode=list:longest
@@ -92,10 +92,12 @@ set undodir=~/.temp
 au FocusLost * silent! wa
 " Set the commands to save in history default number is 20.
 set history=1000
+" Enable filetype checking
 filetype on
 filetype plugin indent on
 " Backspace setting
-set backspace=indent,eol,start whichwrap+=<,>,[,]
+set backspace=indent,eol,start
+set whichwrap+=<,>,[,]
 " No wrap
 set nowrap
 " Disable bells
@@ -105,6 +107,7 @@ set novisualbell
 set mouse=a
 " Highlight 110 collumn
 set colorcolumn=110
+" Enable more colors
 set termguicolors
 " Plugins via https://github.com/junegunn/vim-plug
 call plug#begin()
@@ -118,6 +121,7 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'pangloss/vim-javascript'
 " Airline
 Plug 'vim-airline/vim-airline'
+    let g:airline_powerline_fonts = 1
 " Wakatime
 Plug 'wakatime/vim-wakatime'
 call plug#end()
