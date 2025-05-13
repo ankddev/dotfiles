@@ -5,3 +5,6 @@ install.sh
 AppData
 init.cmd
 {{ end }}
+{{ if eq .chezmoi.os "windows" }}
+.config/nvim
+{{ end }}
