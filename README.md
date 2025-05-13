@@ -9,6 +9,7 @@ chezmoi init https://github.com/ankddev/dotfiles
 This repo includes my configs for:
 - Atom
 - Vim
+- Neovim
 - Nano
 - WSL
 - Chezmoi
