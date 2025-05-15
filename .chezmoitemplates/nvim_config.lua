@@ -10,9 +10,10 @@ vim.o.spell              = false
 vim.o.pumblend           = 0
 vim.o.winblend           = 0
 vim.o.number             = true
-vim.opt.clipboard        = 'unnamedplus'
+vim.opt.clipboard        = 'unnamed,unnamedplus'
 vim.opt.confirm = true
 
+vim.api.nvim_command('set nowrap')
 vim.o.whichwrap          = "<>[]hlb,s"
 vim.g.mapleader          = " "
 vim.opt.completeopt      = 'menu,menuone'
