@@ -103,7 +103,7 @@ set nowrap
 " Disable bells
 set noerrorbells
 set novisualbell
-" Enable mouse support
+" enable mouse support
 set mouse=a
 " Highlight 110 collumn
 set colorcolumn=110
