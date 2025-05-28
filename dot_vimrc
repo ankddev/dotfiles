@@ -1,4 +1,4 @@
-" VIM Config by ANKDDEV
+" VIM config by ANKDDEV
 " https://github.com/ankddev/dotfiles
 " Determine the data directory for vim-plug installation
 if has('nvim')
@@ -136,4 +136,3 @@ augroup cursor_off
             autocmd WinLeave * set nocursorline
                 autocmd WinEnter * set cursorline
 augroup END
-
