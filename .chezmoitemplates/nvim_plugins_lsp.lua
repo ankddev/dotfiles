@@ -1,10 +1,22 @@
 return {
   {
+      "antosha417/nvim-lsp-file-operations",
+      dependencies = {
+          "nvim-lua/plenary.nvim",
+          "nvim-tree/nvim-tree.lua",
+      },
+      config = function()
+          require("lsp-file-operations").setup()
+      end,
+  },
+  {
       "neovim/nvim-lspconfig",
       config = function()
           vim.lsp.enable("rust_analyzer")
           vim.lsp.enable("asm_lsp")
           vim.lsp.enable("gleam")
+          vim.lsp.enable("gopls")
+          vim.lsp.enable("ts-ls")
       end,
       opts = function()
           local ret = {
@@ -72,7 +84,14 @@ return {
                   {name = "luasnip"},
                   {name = "buffer"},
                   {name = "path"}
-              }
+              },
+              mapping = cmp.mapping.preset.insert({
+                  ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                  ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                  ['<C-Space>'] = cmp.mapping.complete(),
+                  ['<C-e>'] = cmp.mapping.abort(),
+                  ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+              }),
           }
       end
   }

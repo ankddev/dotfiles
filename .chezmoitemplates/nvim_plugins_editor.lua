@@ -1,5 +1,10 @@
 return {
   {
+      "catgoose/nvim-colorizer.lua",
+      event = "BufReadPre",
+      opts = {},
+  },
+  {
       "lambdalisue/suda.vim",
       cmd = {"SudaRead", "SudaWrite"}
   },
@@ -141,8 +146,20 @@ return {
           modes = {
               lsp = {
                   win = {position = "right"}
-              }
-          }
+              },
+                diagnostics = {
+                  win = {position = "right"}
+              },
+              test = {
+                  mode = "diagnostics",
+                  preview = {
+                      type = "split",
+                      relative = "win",
+                      position = "right",
+                      size = 0.3,
+                  },
+              },
+          },
       },
       keys = {
           {"<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)"},
