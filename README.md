@@ -15,6 +15,7 @@ This repo includes my configs for:
 - Chezmoi
 - init.cmd (runs with CMD on Windows via Clink)
 - Few Clink scripts
+- Windows Terminal
 - Starship
 - gh-dash
 - gh-changelog
