@@ -4,6 +4,7 @@ install.sh
 {{ if ne .chezmoi.os "windows" }}
 AppData
 init.cmd
+.wslconfig
 {{ end }}
 {{ if eq .chezmoi.os "windows" }}
 .config/nvim
