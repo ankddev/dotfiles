@@ -9,6 +9,7 @@ vim.o.wrap               = true
 vim.o.spell              = false
 vim.o.pumblend           = 0
 vim.o.winblend           = 0
+vim.o.relativenumber     = true
 vim.o.number             = true
 vim.opt.clipboard        = 'unnamed,unnamedplus'
 vim.opt.confirm = true
