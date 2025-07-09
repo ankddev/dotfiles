@@ -113,12 +113,14 @@ set termguicolors
 call plug#begin()
 " Catppuccin theme
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
-" Rust support
-Plug 'rust-lang/rust.vim'
-" Go support
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" JS support
-Plug 'pangloss/vim-javascript'
+" " Rust support
+" Plug 'rust-lang/rust.vim'
+" " Go support
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" " JS support
+" Plug 'pangloss/vim-javascript'
+" Language support
+Plug 'sheerun/vim-polyglot'
 " Airline
 Plug 'vim-airline/vim-airline'
     let g:airline_powerline_fonts = 1
