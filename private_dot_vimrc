@@ -127,8 +127,6 @@ Plug 'wakatime/vim-wakatime'
 call plug#end()
 " Apply theme
 silent! colorscheme catppuccin_mocha
-" Hide mode
-set noshowmode
 " You can split a window into sections by typing `:split` or `:vsplit`.
 " Display cursorline and cursorcolumn ONLY in active window.
 augroup cursor_off
