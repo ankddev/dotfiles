@@ -18,6 +18,7 @@ This repo includes my configs for:
 - Windows Terminal
 - Starship
 - gh-dash
+- NPM
 - gh-changelog
 ## License
 MIT License, see [LICENSE](./LICENSE) file.
