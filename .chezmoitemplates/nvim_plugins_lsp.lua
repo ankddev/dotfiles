@@ -17,6 +17,8 @@ return {
           vim.lsp.enable("gleam")
           vim.lsp.enable("gopls")
           vim.lsp.enable("ts-ls")
+          vim.lsp.enable("astro")
+          vim.lsp.enable("clangd")
       end,
       opts = function()
           local ret = {
