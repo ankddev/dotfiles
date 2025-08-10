@@ -16,7 +16,7 @@ return {
           vim.lsp.enable("asm_lsp")
           vim.lsp.enable("gleam")
           vim.lsp.enable("gopls")
-          vim.lsp.enable("ts-ls")
+          vim.lsp.enable("ts_ls")
           vim.lsp.enable("astro")
           vim.lsp.enable("clangd")
       end,
