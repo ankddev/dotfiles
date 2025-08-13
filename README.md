@@ -20,6 +20,8 @@ This repo includes my configs for:
 - gh-dash
 - NPM
 - gh-changelog
+## List of software
+You can find list of software that I will propably install [here](./SOFTWARE.md).
 ## License
 MIT License, see [LICENSE](./LICENSE) file.
 
