@@ -19,6 +19,8 @@ Here tou can find list of software that I will probably install on new machine.
 - HTTPie
 - gh
 - glab
+- Bottom
+- neohtop (GUI)
 
 ## Editors
 
@@ -58,6 +60,7 @@ Here tou can find list of software that I will probably install on new machine.
 
 ## JS
 
+- nvm (or nvm4windows)
 - Node
 - Deno
 - Bun
