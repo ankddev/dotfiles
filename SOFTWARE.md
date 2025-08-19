@@ -53,6 +53,8 @@ Here tou can find list of software that I will probably install on new machine.
 ## Build systems
 
 - Make
+- CMake (C/CXX)
+- Ninja (C/CXX)
 - Just
 
 ## C/C++
