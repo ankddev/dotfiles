@@ -47,9 +47,13 @@ Here tou can find list of software that I will probably install on new machine.
 - Python
 - NASM
 - Mold
-- CMake
 - Erlang
 - Elixir
+
+## Build systems
+
+- Make
+- Just
 
 ## C/C++
 
