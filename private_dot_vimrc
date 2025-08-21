@@ -38,8 +38,6 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set autoindent
-" Folding
-set foldmethod=syntax
 " Show line numbers
 set relativenumber number
 " Highlight current line
