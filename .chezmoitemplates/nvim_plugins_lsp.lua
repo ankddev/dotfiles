@@ -238,6 +238,10 @@ return {
 				},
 			},
 
+			fuzzy = {
+				implementation = "prefer_rust",
+			},
+
 			snippets = { preset = "luasnip" },
 
 			-- Shows a signature help window while you type arguments for a function
