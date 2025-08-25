@@ -51,7 +51,7 @@ return {
 				lualine_b = {
 					"branch",
 					"diff",
-					"lspstatus",
+					"lsp_status",
 					{
 						"diagnostics",
 						update_in_insert = true,
