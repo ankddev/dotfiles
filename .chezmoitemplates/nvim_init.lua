@@ -1,12 +1,7 @@
--- Config
-require('core.config')
+require("core.common")
+require("core.keymap")
 -- Neovide specific configuration
 if vim.g.neovide then
-    require('core.neovide')
+	require("core.neovide")
 end
-require('core.tabs')
-require('core.search')
--- Plugins
-require('core.plugins')
--- Keymap
-require('core.keymap')
+require("core.plugins")

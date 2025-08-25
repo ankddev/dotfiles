@@ -1,112 +1,247 @@
 return {
-  {
-      "antosha417/nvim-lsp-file-operations",
-      dependencies = {
-          "nvim-lua/plenary.nvim",
-          "nvim-tree/nvim-tree.lua",
-      },
-      config = function()
-          require("lsp-file-operations").setup()
-      end,
-  },
-  {
-      "neovim/nvim-lspconfig",
-      config = function()
-          vim.lsp.enable("rust_analyzer")
-          vim.lsp.enable("asm_lsp")
-          vim.lsp.enable("gleam")
-          vim.lsp.enable("gopls")
-          vim.lsp.enable("ts_ls")
-          vim.lsp.enable("astro")
-          vim.lsp.enable("clangd")
-      end,
-      opts = function()
-          local ret = {
-              diagnostics = {
-                  underline = true,
-                  update_in_insert = false,
-                  virtual_text = {
-                      spacing = 4,
-                      source = "if_many",
-                      prefix = "●"
-                  },
-                  severity_sort = true
-              },
-              inlay_hints = {
-                  enabled = true,
-              },
-              codelens = {
-                  enabled = true
-              },
-              capabilities = {
-                  workspace = {
-                      fileOperations = {
-                          didRename = true,
-                          willRename = true
-                      }
-                  }
-              },
-              format = {
-                  formatting_options = nil,
-                  timeout_ms = nil
-              }
-          }
-          return ret
-      end
-  },
-  {
-      "NeogitOrg/neogit",
-      opts = {}
-  },
-  {
-      "hrsh7th/nvim-cmp",
-      dependencies = {
-          "hrsh7th/cmp-buffer",
-          "hrsh7th/cmp-path",
-          "hrsh7th/cmp-nvim-lsp",
-          "hrsh7th/cmp-nvim-lua",
-          "saadparwaiz1/cmp_luasnip",
-          "onsails/lspkind.nvim"
-      },
-      config = function()
-          local cmp = require("cmp")
-          local lspkind = require('lspkind')
-          cmp.setup {
-              sources = {
-                  {name = "nvim_lsp"},
-                  {name = "luasnip"},
-                  {name = "buffer"},
-                  {name = "path"}
-              },
-              mapping = cmp.mapping.preset.insert({
-                  ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                  ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                  ['<C-Space>'] = cmp.mapping.complete(),
-                  ['<C-e>'] = cmp.mapping.abort(),
-                  ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-              }),
-            formatting = {
-                format = lspkind.cmp_format({
-                  mode = 'symbol_text', -- show symbol and text annotations
-                  maxwidth = {
-                    -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-                    -- can also be a function to dynamically calculate max width such as
-                    -- menu = function() return math.floor(0.45 * vim.o.columns) end,
-                    menu = 50, -- leading text (labelDetails)
-                    abbr = 50, -- actual suggestion item
-                  },
-                  ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-                  show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
+	},
 
-                  -- The function below will be called before any actual modifications from lspkind
-                  -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-                  before = function (entry, vim_item)
-                    -- ...
-                    return vim_item
-                  end
-                })
-              }
-          }
-      end
-  }
+	{
+		"antosha417/nvim-lsp-file-operations",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-tree.lua",
+		},
+		config = function()
+			require("lsp-file-operations").setup()
+		end,
+	},
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			vim.lsp.config("rust_analyzer", {
+				settings = {
+					["rust-analyzer"] = {
+						cargo = {
+							buildScripts = {
+								enable = true,
+							},
+						},
+						procMacro = {
+							enable = true,
+						},
+					},
+				},
+			})
+			vim.lsp.enable("rust_analyzer")
+			vim.lsp.enable("asm_lsp")
+			vim.lsp.enable("gleam")
+			vim.lsp.enable("gopls")
+			vim.lsp.enable("ts_ls")
+			vim.lsp.enable("astro")
+			vim.lsp.enable("clangd")
+			vim.lsp.enable("pylance")
+			vim.lsp.enable("lua_ls")
+		end,
+		opts = function()
+			local ret = {
+				diagnostics = {
+					underline = true,
+					update_in_insert = false,
+					virtual_text = {
+						spacing = 4,
+						source = "if_many",
+						prefix = "●",
+					},
+					severity_sort = true,
+				},
+				inlay_hints = {
+					enabled = true,
+				},
+				codelens = {
+					enabled = true,
+				},
+				capabilities = {
+					workspace = {
+						fileOperations = {
+							didRename = true,
+							willRename = true,
+						},
+					},
+				},
+				format = {
+					formatting_options = nil,
+					timeout_ms = nil,
+				},
+			}
+			return ret
+		end,
+	},
+
+	{
+		"folke/ts-comments.nvim",
+		event = "VeryLazy",
+		opts = {},
+	},
+	{
+		"hedyhli/outline.nvim",
+		lazy = true,
+		cmd = { "Outline", "OutlineOpen" },
+		keys = {
+			{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+		},
+		opts = {},
+	},
+	{
+		"folke/trouble.nvim",
+		cmd = { "Trouble" },
+		opts = {
+			modes = {
+				lsp = {
+					win = { position = "right" },
+				},
+				diagnostics = {
+					win = { position = "right" },
+				},
+				test = {
+					mode = "diagnostics",
+					preview = {
+						type = "split",
+						relative = "win",
+						position = "right",
+						size = 0.3,
+					},
+				},
+			},
+		},
+		keys = {
+			{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+			{ "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
+			{ "<leader>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols (Trouble)" },
+			{ "<leader>cS", "<cmd>Trouble lsp toggle<cr>", desc = "LSP references/definitions/... (Trouble)" },
+			{ "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
+			{ "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
+			{
+				"[q",
+				function()
+					if require("trouble").is_open() then
+						require("trouble").prev({ skip_groups = true, jump = true })
+					else
+						local ok, err = pcall(vim.cmd.cprev)
+						if not ok then
+							vim.notify(err, vim.log.levels.ERROR)
+						end
+					end
+				end,
+				desc = "Previous Trouble/Quickfix Item",
+			},
+			{
+				"]q",
+				function()
+					if require("trouble").is_open() then
+						require("trouble").next({ skip_groups = true, jump = true })
+					else
+						local ok, err = pcall(vim.cmd.cnext)
+						if not ok then
+							vim.notify(err, vim.log.levels.ERROR)
+						end
+					end
+				end,
+				desc = "Next Trouble/Quickfix Item",
+			},
+		},
+	},
+	{ -- Autocompletion
+		"saghen/blink.cmp",
+		event = "VimEnter",
+		version = "1.*",
+		dependencies = {
+			-- Snippet Engine
+			{
+				"L3MON4D3/LuaSnip",
+				version = "2.*",
+				build = (function()
+					-- Build Step is needed for regex support in snippets.
+					-- This step is not supported in many windows environments.
+					-- Remove the below condition to re-enable on windows.
+					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
+						return
+					end
+					return "make install_jsregexp"
+				end)(),
+				dependencies = {
+					-- `friendly-snippets` contains a variety of premade snippets.
+					--    See the README about individual language/framework/plugin snippets:
+					--    https://github.com/rafamadriz/friendly-snippets
+					-- {
+					--   'rafamadriz/friendly-snippets',
+					--   config = function()
+					--     require('luasnip.loaders.from_vscode').lazy_load()
+					--   end,
+					-- },
+				},
+				opts = {},
+			},
+			"folke/lazydev.nvim",
+		},
+		--- @module 'blink.cmp'
+		--- @type blink.cmp.Config
+		opts = {
+			keymap = {
+				-- 'default' (recommended) for mappings similar to built-in completions
+				--   <c-y> to accept ([y]es) the completion.
+				--    This will auto-import if your LSP supports it.
+				--    This will expand snippets if the LSP sent a snippet.
+				-- 'super-tab' for tab to accept
+				-- 'enter' for enter to accept
+				-- 'none' for no mappings
+				--
+				-- For an understanding of why the 'default' preset is recommended,
+				-- you will need to read `:help ins-completion`
+				--
+				-- No, but seriously. Please read `:help ins-completion`, it is really good!
+				--
+				-- All presets have the following mappings:
+				-- <tab>/<s-tab>: move to right/left of your snippet expansion
+				-- <c-space>: Open menu or open docs if already open
+				-- <c-n>/<c-p> or <up>/<down>: Select next/previous item
+				-- <c-e>: Hide menu
+				-- <c-k>: Toggle signature help
+				--
+				-- See :h blink-cmp-config-keymap for defining your own keymap
+				preset = "default",
+
+				-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
+				--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+			},
+
+			appearance = {
+				-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+				-- Adjusts spacing to ensure icons are aligned
+				nerd_font_variant = "mono",
+			},
+
+			completion = {
+				-- By default, you may press `<c-space>` to show the documentation.
+				-- Optionally, set `auto_show = true` to show the documentation after a delay.
+				documentation = { auto_show = true, auto_show_delay_ms = 200 },
+			},
+
+			sources = {
+				default = { "lsp", "path", "snippets", "lazydev" },
+				providers = {
+					lazydev = { module = "lazydev.integrations.blink", score_offset = 100 },
+				},
+			},
+
+			snippets = { preset = "luasnip" },
+
+			-- Shows a signature help window while you type arguments for a function
+			signature = { enabled = true },
+		},
+	},
 }
