@@ -78,4 +78,92 @@ return {
 		},
 		opts = {},
 	},
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {
+			defaults = {
+				vimgrep_arguments = {
+					"rg",
+					"--no-heading",
+					"--with-filename",
+					"--line-number",
+					"--column",
+					"--smart-case",
+				},
+				initial_mode = "insert",
+				scroll_strategy = "limit",
+				results_title = false,
+				layout_strategy = "horizontal",
+				path_display = { "absolute" },
+				selection_strategy = "reset",
+				sorting_strategy = "ascending",
+				color_devicons = true,
+				file_ignore_patterns = { ".git/", ".cache", "build/", "%.class", "%.pdf", "%.mkv", "%.mp4", "%.zip" },
+				layout_config = {
+					horizontal = {
+						prompt_position = "top",
+						preview_width = 0.55,
+						results_width = 0.8,
+					},
+					vertical = {
+						mirror = false,
+					},
+					width = 0.85,
+					height = 0.92,
+					preview_cutoff = 120,
+				},
+			},
+		},
+	},
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		---@type Flash.Config
+		opts = {},
+      -- stylua: ignore
+      keys = {
+          {
+              "s",
+              mode = {"n", "x", "o"},
+              function()
+                  require("flash").jump()
+              end,
+              desc = "Flash"
+          },
+          {
+              "S",
+              mode = {"n", "x", "o"},
+              function()
+                  require("flash").treesitter()
+              end,
+              desc = "Flash Treesitter"
+          },
+          {
+              "r",
+              mode = "o",
+              function()
+                  require("flash").remote()
+              end,
+              desc = "Remote Flash"
+          },
+          {
+              "R",
+              mode = {"o", "x"},
+              function()
+                  require("flash").treesitter_search()
+              end,
+              desc = "Treesitter Search"
+          },
+          {
+              "<c-s>",
+              mode = {"c"},
+              function()
+                  require("flash").toggle()
+              end,
+              desc = "Toggle Flash Search"
+          }
+      }
+,
+	},
 }
