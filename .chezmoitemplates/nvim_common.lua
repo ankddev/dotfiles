@@ -9,7 +9,7 @@ vim.o.laststatus = 3
 vim.o.cursorline = true
 -- Show relative line numbers
 vim.o.number = true
-vim.relativenumber = true
+vim.o.relativenumber = true
 -- Sync clipboard between OS and Neovim.
 -- Schedule the setting after `UiEnter` because it can increase startup-time.
 vim.schedule(function()
