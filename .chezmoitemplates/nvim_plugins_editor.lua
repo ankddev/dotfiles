@@ -68,4 +68,5 @@ return {
 			markdown = true,
 		},
 	},
+	{ "wakatime/vim-wakatime", lazy = false },
 }
