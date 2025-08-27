@@ -46,6 +46,7 @@ return {
 			vim.lsp.enable("clangd")
 			vim.lsp.enable("pylance")
 			vim.lsp.enable("lua_ls")
+			vim.lsp.enable("zls")
 		end,
 		opts = function()
 			local ret = {
