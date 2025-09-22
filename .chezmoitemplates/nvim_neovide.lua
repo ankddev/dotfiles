@@ -3,5 +3,5 @@ vim.g.neovide_title_background_color =
 
 vim.g.neovide_title_text_color = "pink"
 vim.g.neovide_position_animation_length = 0.15
-vim.o.guifont = "JetBrainsMono Nerd Font"
+vim.o.guifont = "Maple Mono NF"
 vim.g.neovide_scale_factor = 0.8
