@@ -3,134 +3,107 @@
 
 # Format
 format = """
-$directory\
-$hostname\
-$localip\
+[](red)$os$username$localip[](red) \
+[](peach)$directory[](peach) \
 $git_branch\
+$character"""
+add_newline = true
+
+right_format = """
+$status\
+$cmd_duration\
 $git_state\
-$package
-$os$sudo$character"""
-add_newline = false
+$git_metrics
+"""
 
 # Current theme
 palette = "catppuccin_mocha"
 
-# Character
+[git_metrics]
+disabled = false
+added_style = "bg:mantle fg:green"
+deleted_style = "bg:mantle fg:red"
+only_nonzero_diffs = false
+format = ' [](mantle)[+$added]($added_style)[/](bg:mantle)[-$deleted]($deleted_style)[](mantle)'
+
+[localip]
+ssh_only = false
+format = '[@$localipv4]($style)'
+style = "bg:red fg:crust"
+disabled = false
+
+[cmd_duration]
+show_milliseconds = true
+format = " [](lavender)[ $duration]($style)[](lavender)"
+style = "bg:lavender fg:crust"
+disabled = false
+min_time = 0
+
+[git_branch]
+symbol = ""
+style = "bg:yellow"
+format = '[](yellow)[[$symbol $branch](fg:crust bg:yellow)]($style)[](yellow) '
+
+[git_state]
+disabled = false
+format = ' [](yellow)[$state( $progress_current/$progress_total)]($style)[](yellow)'
+style = "bg:yellow fg:crust"
+
+[status]
+disabled = false
+format = "[](mauve)[$symbol $status]($style)[](mauve)"
+symbol = "✗"
+success_symbol = "✓"
+sigint_symbol = "SIGINT"
+signal_symbol = "⚡"
+not_executable_symbol = ""
+not_found_symbol = ""
+style = "bg:mauve fg:crust"
+
+[directory]
+style = "bg:peach fg:crust"
+format = "[$read_only$path]($style)"
+truncation_length = 8
+read_only = " "
+truncation_symbol = ""
+
 [character]
 format = "$symbol "
 success_symbol = '[\$](bold green)'
 error_symbol = '[\$](bold maroon)'
 vimcmd_symbol = '[V](bold green)'
 
-# Current package version
-[package]
-format = '[$version]($style) '
-style = "lavender bold"
+[username]
+show_always = true
+style_user = "bg:red fg:crust"
+style_root = "bg:red fg:crust"
+format = '[ $user]($style)'
 
-# Current directory
-[directory]
-format = "[$path]($style)[$read_only]($read_only_style) "
-style = "lavender bold"
-read_only_style = "peach"
-read_only = " R/O "
-truncation_length = 7
-
-# Hostname
-[hostname]
-ssh_only = false
-ssh_symbol = "#"
-format = "[$ssh_symbol$hostname]($style)"
-style = "mauve bold"
-
-# Git state
-[git_state]
-style = "bold teal"
-
-# SUDO
-[sudo]
-symbol = "SUDO "
-format = "[$symbol]($style)"
-disabled = false
-
-# Local IP address
-[localip]
-ssh_only = false
-format = '[@$localipv4](mauve bold) '
-disabled = false
-
-# Current OS
 [os]
-format = "[$symbol]($style)"
-style = "rosewater"
 disabled = false
+format = "[$symbol]($style)"
+style = "bg:red fg:crust"
 
-# Symbols for OS
 [os.symbols]
-# Android
-Android = 'A '
-# Windows
-Windows = "W "
-# macOS
-Macos = "M "
-# Linux and various distros
-# Default for Linux
-Linux = "L "
-# For distros
-AIX = "L "
-Alpaquita = "L "
-AlmaLinux = "L "
-Alpine = "L "
-Amazon = "L "
-Arch = "L "
-Artix = "L "
-CachyOS = "L "
-CentOS = "L "
-Debian = "L "
-DragonFly = "L "
-Emscripten = "L "
-EndeavourOS = "L "
-Fedora = "L "
-FreeBSD = "B "
-Garuda = "L "
-Gentoo = "L "
-HardenedBSD = "B "
-Illumos = "L "
-Kali = "L "
-Mabox = "L "
-Manjaro = "L "
-Mariner = "L "
-MidnightBSD = "B "
-Mint = "L "
-NetBSD = "B "
-NixOS = "L "
-Nobara = "L "
-OpenBSD = "B "
-OpenCloudOS = "L "
-openEuler = "L "
-openSUSE = "L "
-OracleLinux = "L "
-Pop = "L "
-Raspbian = "L "
-Redhat = "L "
-RedHatEnterprise = "L "
-RockyLinux = "L "
-Redox = "L "
-Solus = "L "
-SUSE = "L "
-Ubuntu = "L "
-Ultramarine = "L "
-Uos = "L "
-Void = "L "
-# Unknown
-Unknown = ""
-
-# Git branch
-[git_branch]
-symbol = '@'
-format = "[$symbol$branch(:$remote_branch)]($style) "
-truncation_length = 70
-truncation_symbol = ''
-style = "bold pink"
+Windows = ""
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
 
 # Themes
 # Catppuccin Mocha theme
