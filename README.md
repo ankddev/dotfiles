@@ -14,6 +14,7 @@ This repo includes my configs for:
 - Nushell
 - Nano
 - WSL
+- Zed
 - Chezmoi
 - Starship
 - gh-dash

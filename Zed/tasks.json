@@ -1,0 +1,33 @@
+[
+  {
+    "label": "LazyGit",
+    "command": "lazygit",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": true,
+    "reveal": "always",
+    "reveal_target": "center",
+    "hide": "on_success",
+    "shell": "system",
+    "show_summary": false,
+    "show_command": false
+  },
+  {
+    "label": "Onefetch",
+    "command": "onefetch",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": true,
+    "reveal": "always",
+    "reveal_target": "center",
+    "hide": "never",
+    "shell": "system",
+    "show_summary": false,
+    "show_command": false
+  },
+  {
+    "label": "File finder (tv)",
+    "command": "zed \"$(tv files)\"",
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true
+  }
+]

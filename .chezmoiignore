@@ -2,6 +2,7 @@ README.md
 LICENSE
 SOFTWARE.md
 install.sh
+Zed
 {{ if ne .chezmoi.os "windows" }}
 AppData
 .wslconfig
@@ -14,4 +15,5 @@ Library
 {{ end }}
 {{ if or (ne .chezmoi.os "linux") (ne .chezmoi.os "darwin") }}
 .config/helix
+.config/zed
 {{ end }}

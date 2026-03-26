@@ -1,0 +1,208 @@
+{
+  "base_keymap": "VSCode",
+  "scrollbar": {
+    "axes": {
+      "vertical": true,
+    },
+    "show": "always",
+  },
+  "diff_view_style": "unified",
+  "agent": {
+    "button": false,
+    "favorite_models": [],
+    "model_parameters": [],
+  },
+  "collaboration_panel": {
+    "button": false,
+  },
+  "use_smartcase_search": true,
+  "file_finder": {
+    "modal_max_width": "medium",
+  },
+  "document_symbols": "off",
+  "show_completion_documentation": true,
+  "semantic_tokens": "combined",
+  "vim": {
+    "highlight_on_yank_duration": 200,
+    "use_smartcase_find": true,
+    "toggle_relative_line_numbers": true,
+  },
+  "minimap": {
+    "show": "never",
+  },
+  "scroll_beyond_last_line": "vertical_scroll_margin",
+  "expand_excerpt_lines": 10,
+  "status_bar": {
+    "active_encoding_button": "enabled",
+  },
+  "when_closing_with_no_tabs": "platform_default",
+  "buffer_line_height": "comfortable",
+  "autoscroll_on_clicks": false,
+  "vertical_scroll_margin": 6.0,
+  "double_click_in_multibuffer": "select",
+  "lsp_highlight_debounce": 0,
+  "git": {
+    "inline_blame": {
+      "show_commit_summary": false,
+      "delay_ms": 0,
+    },
+  },
+  "preview_tabs": {
+    "enable_preview_from_multibuffer": false,
+    "enable_keep_preview_on_code_navigation": true,
+    "enable_preview_from_file_finder": false,
+  },
+  "wsl_connections": [
+    {
+      "distro_name": "FedoraLinux-43",
+      "user": null,
+      "projects": [
+        {
+          "paths": ["/home/ankddev/projects/cpython"],
+        },
+      ],
+    },
+  ],
+  "colorize_brackets": true,
+  "sticky_scroll": {
+    "enabled": true,
+  },
+  "notification_panel": {
+    "show_count_badge": true,
+    "button": false,
+    "dock": "right",
+  },
+  "helix_mode": false,
+  "hide_mouse": "never",
+  "ui_font_family": ".ZedSans",
+  "project_panel": {
+    "diagnostic_badges": true,
+    "sort_mode": "directories_first",
+    "bold_folder_labels": false,
+    "auto_fold_dirs": false,
+    "starts_open": false,
+    "scrollbar": {
+      "show": "always",
+    },
+    "indent_size": 20.0,
+    "folder_icons": true,
+    "entry_spacing": "comfortable",
+    "default_width": 240.0,
+    "hide_root": false,
+  },
+  "indent_guides": {
+    "background_coloring": "disabled",
+    "line_width": 1,
+    "coloring": "indent_aware",
+    "active_line_width": 2,
+  },
+  "tab_bar": {
+    "show_tab_bar_buttons": true,
+    "show_pinned_tabs_in_separate_row": false,
+    "show": false,
+  },
+  "relative_line_numbers": "enabled",
+  "show_signature_help_after_edits": true,
+  "auto_signature_help": true,
+  "show_whitespaces": "all",
+  "telemetry": {
+    "diagnostics": true,
+    "metrics": true,
+  },
+  "use_system_path_prompts": false,
+  "debugger": {
+    "dock": "bottom",
+  },
+  "outline_panel": {
+    "dock": "right",
+  },
+  "disable_ai": true,
+  "inlay_hints": {
+    "enabled": true,
+    "show_value_hints": true,
+    "show_type_hints": true,
+    "show_parameter_hints": true,
+    "show_other_hints": true,
+    "show_background": true,
+    "edit_debounce_ms": 700,
+    "scroll_debounce_ms": 50,
+    "toggle_on_modifiers_press": {
+      "control": false,
+      "alt": false,
+      "shift": false,
+      "platform": false,
+      "function": false,
+    },
+  },
+  "buffer_font_family": "Maple Mono NF",
+  "buffer_font_weight": 600,
+  "bottom_dock_layout": "contained",
+  "git_panel": {
+    "show_count_badge": true,
+    "sort_by_path": false,
+    "status_style": "label_color",
+    "tree_view": true,
+    "dock": "left",
+  },
+  "icon_theme": "Catppuccin Mocha",
+  "vim_mode": true,
+  "theme": "Catppuccin Mocha",
+  "ui_font_size": 16.0,
+  "buffer_font_size": 13.0,
+  "use_system_prompts": false,
+  "title_bar": {
+    "show_branch_name": true,
+    "show_user_menu": true,
+    "show_onboarding_banner": true,
+    "show_user_picture": false,
+    "show_menus": false,
+    "show_branch_icon": true,
+    "show_sign_in": false,
+  },
+  "autosave": "on_focus_change",
+  "tabs": {
+    "close_position": "right",
+    "file_icons": true,
+    "git_status": true,
+    "activate_on_close": "history",
+    "show_close_button": "hover",
+    "show_diagnostics": "all",
+  },
+  "toolbar": {
+    "selections_menu": true,
+    "quick_actions": true,
+    "breadcrumbs": true,
+    "agent_review": false,
+    "code_actions": false,
+  },
+  "diagnostics": {
+    "lsp_pull_diagnostics": {
+      "debounce_ms": 0,
+    },
+    "inline": {
+      "update_debounce_ms": 0,
+      "enabled": true,
+    },
+  },
+  "wrap_guides": [80, 120],
+  "terminal": {
+    "show_count_badge": true,
+    "font_size": 15,
+    "font_family": "Maple Mono NF",
+    "shell": {
+      "program": "nu",
+    },
+    "font_features": {
+      "calt": true,
+      "liga": true,
+    },
+  },
+  "buffer_font_features": {
+    "liga": true,
+    "calt": true,
+  },
+  "which_key": {
+    "enabled": true,
+    "delay_ms": 0,
+  },
+}

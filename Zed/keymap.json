@@ -1,0 +1,165 @@
+[
+  {
+    "context": "vim_mode == insert && !menu",
+    "bindings": {
+      "ctrl-x": "editor::ShowCompletions",
+
+      "ctrl-x ctrl-o": null,
+      "ctrl-x ctrl-a": null,
+      "ctrl-x ctrl-c": null,
+      "ctrl-x ctrl-l": null,
+      "ctrl-x ctrl-z": null,
+      "ctrl-x ctrl-e": null,
+      "ctrl-x ctrl-y": null,
+    },
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "space": null,
+
+      // make arrow keys wrapping
+      "left": "vim::WrappingLeft",
+      // make arrow keys wrapping
+      "right": "vim::WrappingRight",
+
+      // Word motions
+      // "w": "vim::NextWordStart",
+      // "e": "vim::NextWordEnd",
+      // "b": "vim::PreviousWordStart",
+      // "g e": "vim::PreviousWordEnd",
+      // Subword motions
+      "w": "vim::NextSubwordStart",
+      "b": "vim::PreviousSubwordStart",
+      "e": "vim::NextSubwordEnd",
+      // "g e": "vim::PreviousSubwordEnd",
+      "shift-w": ["vim::NextWordStart", { "ignore_punctuation": true }],
+      "shift-e": ["vim::NextWordEnd", { "ignore_punctuation": true }],
+      "shift-b": ["vim::PreviousWordStart", { "ignore_punctuation": true }],
+      // "g shift-e": ["vim::PreviousWordEnd", { "ignore_punctuation": true }],
+      "s": "vim::PushSneak",
+      "shift-s": "vim::PushSneakBackward",
+      "/": "vim::Search",
+      "shift-/": "pane::DeploySearch",
+
+      // "space" commands
+      "space i": "editor::ToggleInlayHints",
+      "space u": "editor::ToggleSoftWrap",
+      "space shift-f": "editor::Format",
+      "space f n": "editor::CopyFileName",
+      "space f l": "editor::CopyFileLocation",
+      "space f p": "editor::CopyPermalinkToLine",
+      "space r o": "workspace::ToggleReadOnlyFile",
+
+      // "g" commands
+      "g e": "diagnostics::DeployCurrentFile",
+      "g shift-r": "vim::PushReplaceWithRegister",
+      "g r": "editor::Rename",
+      "g h": "editor::Hover",
+      "g shift-b": "editor::BlameHover",
+      "g d": "editor::GoToDefinition",
+      "g shift-d": "editor::GoToDeclaration",
+      "g y": "editor::GoToTypeDefinition",
+      "g shift-i": "editor::GoToImplementation",
+      "g a": "editor::SelectAllMatches",
+      "g s": "outline::Toggle",
+      "g shift-s": "project_symbols::Toggle",
+      "g .": "editor::ToggleCodeActions",
+      "g shift-a": "editor::FindAllReferences",
+      "g space": "editor::OpenExcerpts",
+
+      // Open something split
+      "g p d": "editor::GoToDefinitionSplit",
+      "g p shift-d": "editor::GoToDeclarationSplit",
+      "g p y": "editor::GoToTypeDefinitionSplit",
+      "g p shift-i": "editor::GoToImplementationSplit",
+      "g p space": "editor::OpenExcerptsSplit",
+    },
+  },
+  {
+    "context": "vim_operator == a || vim_operator == i || vim_operator == cs || vim_operator == helix_next || vim_operator == helix_previous",
+    "bindings": {
+      "w": "vim::Word",
+      "shift-w": ["vim::Word", { "ignore_punctuation": true }],
+      // Subword TextObject
+      // "w": "vim::Subword",
+      // "shift-w": ["vim::Subword", { "ignore_punctuation": true }],
+
+      // "q": "vim::AnyQuotes",
+      "q": "vim::MiniQuotes",
+      // "b": "vim::Parentheses",
+      // "b": "vim::AnyBrackets",
+      "b": "vim::MiniBrackets",
+    },
+  },
+  {
+    "context": "VimControl && !menu || !Editor && !Terminal",
+    "bindings": {
+      // window related commands (ctrl-w X)
+      "ctrl-w": null,
+      "ctrl-w shift-q": "workspace::CloseActiveDock",
+
+      "shift-h": "workspace::ActivatePaneLeft",
+      "shift-l": "workspace::ActivatePaneRight",
+      "shift-k": "workspace::ActivatePaneUp",
+      "shift-j": "workspace::ActivatePaneDown",
+    },
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "bindings": {
+      "g /": "pane::DeploySearch",
+    },
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "a": "project_panel::NewFile",
+      "shift-a": "project_panel::NewDirectory",
+      "x": "project_panel::Cut",
+      "c": "project_panel::Copy",
+      "p": "project_panel::Paste",
+      "shift-d": "project_panel::Delete",
+      "d": "project_panel::Trash",
+      "r": "project_panel::Rename",
+      "v": "project_panel::OpenSplitVertical",
+      "o": "project_panel::OpenSplitHorizontal",
+      "space": "project_panel::Open",
+      "m": "project_panel::RevealInFileManager",
+      "s": "workspace::OpenWithSystem",
+    },
+  },
+  {
+    "context": "(Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu) || (!Editor && !Terminal)",
+    "bindings": {
+      "space l": "lsp_tool::ToggleMenu",
+      "space n": "project_panel::ToggleFocus",
+      "space o": "outline_panel::ToggleFocus",
+      "space t": "task::Spawn",
+      "space space": "file_finder::Toggle",
+      "space p": "projects::OpenRecent",
+      "space d f": "debug_panel::ToggleFocus",
+      "space d s": "debugger::Start",
+      "space d shift-s": "debugger::Stop",
+      "space d r": "debugger::RerunSession",
+      "space d p": "debugger::Pause",
+      "space d o": "debugger::StepOver",
+      "space d shift-o": "debugger::StepOut",
+      "space b": "editor::ToggleBreakpoint",
+      "space s": "workspace::ToggleWorktreeSecurity",
+
+      "g shift-s": "project_symbols::Toggle",
+      "g shift-e": "diagnostics::Deploy",
+      "g shift-/": "pane::DeploySearch",
+      "g b": "git::Blame",
+      "g m": "editor::OpenContextMenu",
+    },
+  },
+  {
+    "context": "((Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu) || !Editor) && debugger_stopped",
+    "use_key_equivalents": true,
+    "bindings": {
+      "space d c": "debugger::Continue",
+    },
+  },
+]
