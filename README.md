@@ -9,13 +9,10 @@ chezmoi init https://github.com/ankddev/dotfiles
 This repo includes my configs for:
 - Atom
 - Vim
-- Neovim
+- Neovim (in [dedicated repo](https://github.com/ankddev/nvim-config))
 - Nano
 - WSL
 - Chezmoi
-- init.cmd (runs with CMD on Windows via Clink)
-- Few Clink scripts
-- Windows Terminal
 - Starship
 - gh-dash
 - NPM
@@ -24,4 +21,3 @@ This repo includes my configs for:
 You can find list of software that I will propably install [here](./SOFTWARE.md).
 ## License
 MIT License, see [LICENSE](./LICENSE) file.
-
