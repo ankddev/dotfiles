@@ -18,6 +18,6 @@ This repo includes my configs for:
 - NPM
 - gh-changelog
 ## List of software
-You can find list of software that I will propably install [here](./SOFTWARE.md).
+You can find list of software that I will probably install [here](./SOFTWARE.md).
 ## License
-MIT License, see [LICENSE](./LICENSE) file.
+CC0 license, see [LICENSE](./LICENSE) file. This means that you can do whatever you like with it.

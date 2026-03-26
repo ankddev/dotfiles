@@ -1,5 +1,5 @@
 # List of software
-Here tou can find list of software that I will probably install on new machine.
+Here you can find list of software that I will probably install on new machine.
 
 ## Common
 
@@ -13,10 +13,7 @@ Here tou can find list of software that I will probably install on new machine.
 - Nushell
 - Yazi
 - bat
-- lasygit
 - eza
-- pastel
-- HTTPie
 - gh
 - glab
 - Bottom
@@ -28,12 +25,6 @@ Here tou can find list of software that I will probably install on new machine.
 - Vim
 - Nano
 - Zed
-- VS Code
-- JetBrains
-    - CLion
-    - RustRover
-    - GoLand
-- Kakoune
 - Helix
 
 ## Compilers and languages
@@ -84,6 +75,7 @@ Here tou can find list of software that I will probably install on new machine.
 - typescript-language-server
 - asm_lsp
 - gleam
+- ty
 
 ## Python
 
@@ -96,6 +88,7 @@ Here tou can find list of software that I will probably install on new machine.
 - cargo-binstall
 - cargo-cache
 - cargo-template
+- cargo-insta
 
 ## Go
 
@@ -107,9 +100,7 @@ Here tou can find list of software that I will probably install on new machine.
 
 ## Windows
 
-- MSVC
 - WinGet
 - Scoop
 - Chocolatey
 - CLink
-
