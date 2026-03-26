@@ -1,0 +1,11 @@
+{{ if eq .chezmoi.os "windows" }}
+    ["AppData/Local/nvim"]
+        type = "git-repo"
+        url = "https://github.com/ankddev/nvim-config.git"
+        refreshPeriod = "168h"
+{{ else }}
+    [".config/nvim"]
+        type = "git-repo"
+        url = "https://github.com/ankddev/nvim-config.git"
+        refreshPeriod = "168h"
+{{ end }}
