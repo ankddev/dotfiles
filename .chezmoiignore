@@ -6,3 +6,9 @@ install.sh
 AppData
 .wslconfig
 {{ end }}
+{{ if ne .chezmoi.os "linux" }}
+.config/nushell
+{{ end }}
+{{ if ne .chezmoi.os "darwin" }}
+Library
+{{ end }}
