@@ -1,0 +1,52 @@
+theme = "catppuccin_mocha"
+
+[editor]
+line-number = "relative"
+cursorline = true
+rulers = [80, 120]
+color-modes = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.statusline]
+left = [
+  "mode",
+  "file-name",
+  "file-modification-indicator",
+  "read-only-indicator",
+]
+center = ["spinner", "diagnostics", "workspace-diagnostics"]
+right = [
+  "selections",
+  "position",
+  "position-percentage",
+  "total-line-numbers",
+  "file-encoding",
+  "file-line-ending",
+  "file-type",
+]
+diagnostics = ["hint", "info", "warning", "error"]
+
+[editor.lsp]
+display-progress-messages = true
+display-inlay-hints = true
+
+[editor.whitespace.render]
+space = "all"
+tab = "all"
+nbsp = "all"
+nnbsp = "all"
+newline = "none"
+
+[keys.insert]
+up = "no_op"
+down = "no_op"
+left = "no_op"
+right = "no_op"
+pageup = "no_op"
+pagedown = "no_op"
+home = "no_op"
+end = "no_op"

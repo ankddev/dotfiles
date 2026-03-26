@@ -10,6 +10,7 @@ This repo includes my configs for:
 - Atom
 - Vim
 - Neovim (in [dedicated repo](https://github.com/ankddev/nvim-config))
+- Helix
 - Nushell
 - Nano
 - WSL
