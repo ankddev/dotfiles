@@ -1,4 +1,27 @@
 {
+  "ssh_connections": [
+    {
+      "host": "cs.vigilant-fiesta-5gxwg6996pgr2p4rg.main",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/workspaces/gleam"
+          ]
+        },
+        {
+          "paths": [
+            "/workspaces/ruff"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "cs.verbose-tribble-x5vj56446xwq36g7v.main",
+      "args": [],
+      "projects": []
+    }
+  ],
   "base_keymap": "VSCode",
   "scrollbar": {
     "axes": {
@@ -76,6 +99,7 @@
   "hide_mouse": "never",
   "ui_font_family": ".ZedSans",
   "project_panel": {
+    "git_status_indicator": true,
     "diagnostic_badges": true,
     "sort_mode": "directories_first",
     "bold_folder_labels": false,
@@ -138,9 +162,10 @@
   "buffer_font_weight": 600,
   "bottom_dock_layout": "contained",
   "git_panel": {
+    "file_icons": false,
     "show_count_badge": true,
     "sort_by_path": false,
-    "status_style": "label_color",
+    "status_style": "icon",
     "tree_view": true,
     "dock": "left",
   },
