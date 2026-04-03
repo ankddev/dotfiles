@@ -3,6 +3,8 @@ Here you can find list of software that I will probably install on new machine.
 
 ## Common
 
+- Firefox
+- Obsidian
 - chezmoi
 - fzf
 - fd
@@ -18,12 +20,14 @@ Here you can find list of software that I will probably install on new machine.
 - glab
 - Bottom
 - neohtop (GUI)
+- Wezterm
+- Alacritty
 
 ## Editors
 
 - Neovim
+- Neovide
 - Vim
-- Nano
 - Zed
 - Helix
 
