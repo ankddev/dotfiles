@@ -5,22 +5,19 @@
       "args": [],
       "projects": [
         {
-          "paths": [
-            "/workspaces/gleam"
-          ]
+          "paths": ["/workspaces/gleam"],
         },
-        {
-          "paths": [
-            "/workspaces/ruff"
-          ]
-        }
-      ]
+      ],
     },
     {
       "host": "cs.verbose-tribble-x5vj56446xwq36g7v.main",
       "args": [],
-      "projects": []
-    }
+      "projects": [
+        {
+          "paths": ["/workspaces/ruff"],
+        },
+      ],
+    },
   ],
   "base_keymap": "VSCode",
   "scrollbar": {
