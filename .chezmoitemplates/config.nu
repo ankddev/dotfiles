@@ -4,8 +4,10 @@
 # ********************************************************
 
 # Set default editor to nvim
-$env.config.buffer_editor = "hx"
-$env.EDITOR = "hx"
+$env.config.buffer_editor = "nvim"
+$env.EDITOR = "nvim"
+# $env.config.buffer_editor = "hx"
+# $env.EDITOR = "hx"
 $env.config.show_banner = false
 $env.config.use_kitty_protocol = true
 $env.config.display_errors.exit_code = true
