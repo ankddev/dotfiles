@@ -5,13 +5,16 @@
 
 {{- if not $codespaces -}}
     {{- $email = promptStringOnce . "email" "Email address" "ankddev@duck.com" -}}
-    {{- $hostChoices := list "desktop" "work" "server" "termux" "vm" "codespace" "wsl" -}}
-    {{- $hostType = promptChoiceOnce . "hostType" "What type of host are you on" $hostChoices -}}
+
+    {{- $hostChoices := list "desktop" "server" "termux" "vm" "codespace" "wsl" "embedded" -}}
+    {{- $hostType = promptChoiceOnce . "hostType" "What type of host are you on" $hostChoices "desktop" -}}
 {{- end -}}
 
 [data]
     email = {{ $email | quote }}
     hostType = {{ $hostType | quote }}
+    isGui = {{ or (eq $hostType "desktop") (eq $hostType "vm") }}
+    isMinimal = {{ or (eq $hostType "embedded") (eq $hostType "server") }}
 
 [git]
     autoCommit = true
