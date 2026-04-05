@@ -1,13 +1,22 @@
-{{- $email := promptStringOnce . "email" "Email address" -}}
-{{- $computerType := promptStringOnce . "computerType" "Type of this computer (general, work, vm, wsl, codespace, server)" -}}
+{{- $codespaces := env "CODESPACES" | not | not -}}
+
+{{- $email := "ankddev@duck.com" -}}
+{{- $hostType := "codespace" -}}
+
+{{- if not $codespaces -}}
+    {{- $email = promptStringOnce . "email" "Email address" "ankddev@duck.com" -}}
+    {{- $hostChoices := list "desktop" "work" "server" "termux" "vm" "codespace" "wsl" -}}
+    {{- $hostType = promptChoiceOnce . "hostType" "What type of host are you on" $hostChoices -}}
+{{- end -}}
 
 [data]
     email = {{ $email | quote }}
-    computerType = {{ $computerType | quote }}
+    hostType = {{ $hostType | quote }}
 
 [git]
     autoCommit = true
     autoPush = true
     commitMessageTemplate = '''{{ "{{" }} promptString "Commit message" {{ "}}" }}'''
+
 [diff]
     exclude = ["scripts"]
