@@ -1,6 +1,8 @@
 # Enable dev mode on Windows. See
 # https://learn.microsoft.com/en-us/windows/advanced-settings/developer-mode#use-group-policies-or-registry-keys-to-enable-a-device
 
+Write-Host "Enabling dev mode"
+
 # Self-elevate the script if required
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator'))
 {
@@ -12,5 +14,11 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     }
 }
 
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v "AllowDevelopmentWithoutDevLicense" /d "1"
-Pause
+try
+{
+    reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v "AllowDevelopmentWithoutDevLicense" /d "1"
+} catch
+{
+    Write-Error "An error occured while trying to enable dev mode: $_"
+    Pause
+}
