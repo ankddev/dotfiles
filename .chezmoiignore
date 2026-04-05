@@ -6,6 +6,11 @@ install.sh
 scripts
 Zed
 
+# GUI-only files
+{{ if not .isGui }}
+.atom
+{{ end }}
+
 # Windows-only files
 {{ if ne .chezmoi.os "windows" }}
 AppData
