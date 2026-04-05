@@ -1,4 +1,4 @@
-" VIM config by ANKDDEV
+" VIM config by ankddev
 " https://github.com/ankddev/dotfiles
 " Determine the data directory for vim-plug installation
 if has('nvim')
