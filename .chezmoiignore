@@ -2,18 +2,32 @@ README.md
 LICENSE
 SOFTWARE.md
 install.sh
+scripts
 Zed
+
 {{ if ne .chezmoi.os "windows" }}
 AppData
 .wslconfig
+
+{{ if (.isGui | not) }}
+AppData/Roaming/Zed
 {{ end }}
+
+{{ end }}
+
 {{ if and (ne .chezmoi.os "linux") (ne .chezmoi.os "android") }}
 .config/nushell
 {{ end }}
+
 {{ if ne .chezmoi.os "darwin" }}
 Library
 {{ end }}
+
 {{ if and (ne .chezmoi.os "linux") (and (ne .chezmoi.os "darwin") (ne .chezmoi.os "android")) }}
 .config/helix
+
+{{ if not .isGui }}
 .config/zed
+{{ end }}
+
 {{ end }}
