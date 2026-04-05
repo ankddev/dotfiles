@@ -76,7 +76,7 @@ def is-success [closure: closure] {
     do $closure | complete | get exit_code == 0
 }
 
-# Unlcock Bitwarden valut via CLI
+# Unlcock Bitwarden vault via CLI
 def --env bwu [] {
     let pass = (python -c "import keyring; print(keyring.get_password('Bitwarden', '{{ .email }}'))" | str trim)
     if ($pass == "None" or ($pass | is-empty)) {
