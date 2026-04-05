@@ -12,7 +12,7 @@ AppData
 .wslconfig
 
 # Windows and GUI-only files
-{{ if (.isGui | not) }}
+{{ if not .isGui }}
 AppData/Roaming/Zed
 {{ end }}
 
