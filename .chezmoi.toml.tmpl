@@ -1,7 +1,9 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $computerType := promptStringOnce . "computerType" "Type of this computer (general, work, vm, wsl, codespace, server)" -}}
 
 [data]
     email = {{ $email | quote }}
+    computerType = {{ $computerType | quote }}
 
 [git]
     autoCommit = true
