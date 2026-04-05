@@ -6,40 +6,30 @@ install.sh
 scripts
 Zed
 
-# GUI-only files
-{{ if not .isGui }}
-.atom
-{{ end }}
-
-# Windows-only files
+# Windows-specific
 {{ if ne .chezmoi.os "windows" }}
-AppData
+AppData/
 .wslconfig
-
-# Windows and GUI-only files
-{{ if not .isGui }}
-AppData/Roaming/Zed
 {{ end }}
 
-{{ end }}
-
-# Ignore on Windows
-{{ if and (ne .chezmoi.os "linux") (ne .chezmoi.os "android") }}
-.config/nushell
-{{ end }}
-
-# macOS-only files
-{{ if ne .chezmoi.os "darwin" }}
-Library
-{{ end }}
-
-# Unix-only files
-{{ if and (ne .chezmoi.os "linux") (and (ne .chezmoi.os "darwin") (ne .chezmoi.os "android")) }}
+# Unix-specific
+{{ if eq .chezmoi.os "windows" }}
 .config/helix
-
-# Unix and GUI-only files
-{{ if not .isGui }}
-.config/zed
 {{ end }}
 
+# Linux and Android-specific
+{{ if and (ne .chezmoi.os "linux") (ne .chezmoi.os "android") }}
+.config/nushell/
+{{ end }}
+
+# macOS-specific
+{{ if ne .chezmoi.os "darwin" }}
+Library/
+{{ end }}
+
+# GUI-specific
+{{ if not .isGui }}
+.atom/
+.config/zed/
+AppData/Roaming/Zed/
 {{ end }}
