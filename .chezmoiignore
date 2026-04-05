@@ -1,3 +1,4 @@
+# Common ignores
 README.md
 LICENSE
 SOFTWARE.md
@@ -5,27 +6,33 @@ install.sh
 scripts
 Zed
 
+# Windows-only files
 {{ if ne .chezmoi.os "windows" }}
 AppData
 .wslconfig
 
+# Windows and GUI-only files
 {{ if (.isGui | not) }}
 AppData/Roaming/Zed
 {{ end }}
 
 {{ end }}
 
+# Ignore on Windows
 {{ if and (ne .chezmoi.os "linux") (ne .chezmoi.os "android") }}
 .config/nushell
 {{ end }}
 
+# macOS-only files
 {{ if ne .chezmoi.os "darwin" }}
 Library
 {{ end }}
 
+# Unix-only files
 {{ if and (ne .chezmoi.os "linux") (and (ne .chezmoi.os "darwin") (ne .chezmoi.os "android")) }}
 .config/helix
 
+# Unix and GUI-only files
 {{ if not .isGui }}
 .config/zed
 {{ end }}
