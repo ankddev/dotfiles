@@ -1,3 +1,5 @@
+{{ if eq .chezmoi.os "windows" }}
+
 # Enable dev mode on Windows. See
 # https://learn.microsoft.com/en-us/windows/advanced-settings/developer-mode#use-group-policies-or-registry-keys-to-enable-a-device
 
@@ -22,3 +24,5 @@ try
     Write-Error "An error occured while trying to enable dev mode: $_"
     Pause
 }
+
+{{ end }}
