@@ -1,0 +1,48 @@
+[packages.scoop]
+minimal_apps = [
+  "7zip",
+  "just",
+  "bat",
+  "vim",
+  "neovim",
+  "less",
+  "Maple-Mono-NF",
+  "mingw",
+  "watchexec",
+]
+apps = [
+  "clink",
+  "nu",
+  "alacritty",
+  "difftastic",
+  "elixir",
+  "erlang",
+  "eza",
+  "fnm",
+  "glab",
+  "gleam",
+  "helix",
+  "hyperfine",
+  "lazygit",
+  "llvm",
+  "lua-language-server",
+  "neovide",
+  "obsidian",
+  "prek",
+  "television",
+  "tealdeer",
+  "uv",
+  "wasmer",
+  "wasmtime",
+  "wezterm",
+  "perl",
+  "zig",
+  "zls",
+  "wget",
+]
+
+[packages.scoop.buckets]
+main = "https://github.com/ScoopInstaller/Main.git"
+extras = "https://github.com/ScoopInstaller/Extras"
+versions = "https://github.com/ScoopInstaller/Versions"
+nerd-fonts = "https://github.com/matthewjberger/scoop-nerd-fonts"

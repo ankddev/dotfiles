@@ -1,0 +1,28 @@
+Set-ExecutionPolicy Bypass -Scope Process -Force
+if (-not (Get-Command scoop -ErrorAction SilentlyContinue))
+{
+    Write-Host "Installing Scoop..." -ForegroundColor Cyan
+
+    Invoke-RestMethod -Uri https://scoop.sh | Invoke-Expression
+    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+
+    # Git is needed for buckets to work
+    scoop install git
+} else
+{
+    Write-Host "Scoop is already installed." -ForegroundColor Green
+}
+
+{{ range $name, $url := .packages.scoop.buckets -}}
+scoop bucket add {{ $name }} {{ $url }}
+{{ end }}
+
+{{ range .packages.scoop.minimal_apps -}}
+scoop install {{ . }}
+{{ end }}
+
+{{ if not .isMinimal }}
+{{ range .packages.scoop.apps -}}
+scoop install {{ . }}
+{{ end }}
+{{ end }}
