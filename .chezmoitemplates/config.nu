@@ -76,6 +76,24 @@ def is-success [closure: closure] {
     do $closure | complete | get exit_code == 0
 }
 
+# Unlcock Bitwarden valut via CLI
+def --env bwu [] {
+    let pass = (python -c "import keyring; print(keyring.get_password('Bitwarden', '{{ .email }}'))" | str trim)
+    if ($pass == "None" or ($pass | is-empty)) {
+        error make {msg: $"Password not found in keyring! Please execute `python -c \"import keyring; keyring.set_password\('Bitwarden', '<email>', '<pass>'\)\"`"}
+    }
+
+    let session = (bw unlock $pass --raw)
+
+    if ($env | get -o BW_SESSION | is-not-empty) {
+        $env.BW_SESSION = $session
+        print "Bitwarden session updated!"
+    } else {
+        $env.BW_SESSION = $session
+        print "Bitwarden unlocked!"
+    }
+}
+
 # Request info from ifconfig.me
 def myip [] {
     http get https://ifconfig.me/all | from json
