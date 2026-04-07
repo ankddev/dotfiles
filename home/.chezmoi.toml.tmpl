@@ -1,20 +1,40 @@
-{{- $codespaces := env "CODESPACES" | not | not -}}
+{{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $personal := false -}}{{/* true if this machine should have personal secrets */}}
 
-{{- $email := "ankddev@duck.com" -}}
-{{- $hostType := "codespace" -}}
+{{- $hostname := .chezmoi.hostname -}}
 
-{{- if not $codespaces -}}
-    {{- $email = promptStringOnce . "email" "Email address" "ankddev@duck.com" -}}
+{{- $email := promptStringOnce . "email" "Email address" "ankddev@duck.com" -}}
 
-    {{- $hostChoices := list "desktop" "server" "termux" "vm" "codespace" "wsl" "embedded" -}}
-    {{- $hostType = promptChoiceOnce . "hostType" "What type of host are you on" $hostChoices "desktop" -}}
+{{- $osID := .chezmoi.os -}}
+{{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+{{/* Detect GitHub codespaces, VSCode remote containers and other VMs */}}
+{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "ubuntu" "vscode") -}}
+{{-   $ephemeral = true -}}
+{{-   $headless = true -}}
+{{- end -}}
+
+{{- if not $ephemeral -}}
+{{-   if stdinIsATTY -}}
+{{-     $headless = promptBoolOnce . "headless" "Is this machine headless" -}}
+{{-     $ephemeral = promptBoolOnce . "ephemeral" "Is this machine ephemeral" -}}
+{{-     $personal = promptBoolOnce . "personal" "Should this machine have personal secrets" -}}
+{{-   else -}}
+{{-     $ephemeral = true -}}
+{{-     $headless = true -}}
+{{-   end -}}
 {{- end -}}
 
 [data]
+    ephemeral = {{ $ephemeral }}
     email = {{ $email | quote }}
-    hostType = {{ $hostType | quote }}
-    isGui = {{ or (eq $hostType "desktop") (eq $hostType "vm") }}
-    isMinimal = {{ or (eq $hostType "embedded") (eq $hostType "server") }}
+    headless = {{ $headless }}
+    hostname = {{ $hostname | quote }}
+    personal = {{ $personal }}
+    osid = {{ $osID | quote }}
 
 [git]
     autoCommit = true

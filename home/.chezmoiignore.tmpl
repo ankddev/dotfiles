@@ -24,7 +24,7 @@ Library/
 {{ end }}
 
 # GUI-specific
-{{ if not .isGui }}
+{{ if .headless }}
 .atom/
 .config/zed/
 AppData/Roaming/Zed/
