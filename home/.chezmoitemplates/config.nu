@@ -13,6 +13,7 @@ $env.config.use_kitty_protocol = true
 $env.config.display_errors.exit_code = true
 $env.config.render_right_prompt_on_last_line = true
 $env.config.history.max_size = 1_000_000_000
+$env.config.edit_mode = 'vi'
 # Hack to work properly in Wezterm
 $env.config.shell_integration = {
     osc133: false
