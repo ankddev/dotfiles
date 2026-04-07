@@ -19,8 +19,10 @@ $env.config.shell_integration = {
     osc133: false
 }
 
+{{ if eq .chezmoi.os "windows" -}}
 # File previews on Yazi on Windows
 $env.YAZI_FILE_ONE = "C:\\Program Files\\Git\\usr\\bin\\file.exe"
+{{- end }}
 
 # Create autoload dir, if it isn't already
 mkdir ($nu.data-dir | path join "vendor/autoload")
