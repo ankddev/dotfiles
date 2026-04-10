@@ -1,0 +1,38 @@
+packages:
+  scoop_buckets:
+    - name: main
+      url: https://github.com/ScoopInstaller/Main.git
+    - name: extras
+      url: https://github.com/ScoopInstaller/Extras
+    - name: versions
+      url: https://github.com/ScoopInstaller/Versions
+    - name: nerd-fonts
+      url: https://github.com/matthewjberger/scoop-nerd-fonts
+
+  # Tools installed with cargo install or cargo binstall
+  rust:
+    - id: cargo-nextest
+    - id: cargo-insta
+    - id: cargo-deny
+    - id: cargo-update
+    - id: cargo-cache
+
+  # Here, you can specify id of the package and name in different PMs:
+  # - apt
+  # - dnf
+  # - pacman
+  # - aur (paru, etc.)
+  # - brew (mainly macOS) and cask
+  # - scoop
+  # - winget
+
+  essentials:
+    # Common essentials
+    - id: fd-find
+      apt: fd-find
+      dnf: fd-find
+      pacman: fd
+      brew: fd
+      scoop: fd
+    - id: neovim
+      scoop: neovim

@@ -15,4 +15,19 @@ if (-not (Get-Command scoop -ErrorAction SilentlyContinue))
     Write-Host "Scoop is already installed." -ForegroundColor Green
 }
 
+Write-Host "Adding Scoop Buckets..."
+# {{ range $name, $url := .packages.scoop_buckets -}}
+scoop bucket add {{ $name }} {{ $url }}
+# {{ end }}
+
+# {{- $all_apps := list -}}
+
+# {{- range .packages.essentials -}}
+#   {{- if hasKey . "scoop" }}{{ $all_apps = append $all_apps (index . "scoop") }}{{ end -}}
+# {{- end -}}
+# {{- range $all_apps }}
+Write-Host "Installing {{ . }}..."
+scoop install {{ . }}
+# {{- end }}
+
 # {{ end }}
