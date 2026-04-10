@@ -1,4 +1,5 @@
-{{ if eq .chezmoi.os "windows" }}
+# vim: set ft=powershell:
+# {{ if eq .chezmoi.os "windows" }}
 
 # Enable dev mode on Windows. See
 # https://learn.microsoft.com/en-us/windows/advanced-settings/developer-mode#use-group-policies-or-registry-keys-to-enable-a-device
@@ -25,4 +26,4 @@ try
     Pause
 }
 
-{{ end }}
+# {{ end }}

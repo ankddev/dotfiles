@@ -1,4 +1,5 @@
-{{ if eq .chezmoi.os "windows" }}
+# vim: set ft=powershell:
+# {{ if eq .chezmoi.os "windows" }}
 
 Set-ExecutionPolicy Bypass -Scope Process -Force
 if (-not (Get-Command scoop -ErrorAction SilentlyContinue))
@@ -14,4 +15,4 @@ if (-not (Get-Command scoop -ErrorAction SilentlyContinue))
     Write-Host "Scoop is already installed." -ForegroundColor Green
 }
 
-{{ end }}
+# {{ end }}

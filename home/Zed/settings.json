@@ -28,11 +28,13 @@
   },
   "diff_view_style": "unified",
   "agent": {
+    "dock": "right",
     "button": false,
     "favorite_models": [],
     "model_parameters": [],
   },
   "collaboration_panel": {
+    "dock": "left",
     "button": false,
   },
   "use_smartcase_search": true,
@@ -96,6 +98,7 @@
   "hide_mouse": "never",
   "ui_font_family": ".ZedSans",
   "project_panel": {
+    "dock": "left",
     "git_status_indicator": true,
     "diagnostic_badges": true,
     "sort_mode": "directories_first",
