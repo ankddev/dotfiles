@@ -196,3 +196,9 @@ source ($nu.default-config-dir | path join "catppuccin.nu")
 # --------------
 
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+
+# ----------
+# Setup mise
+# ----------
+
+mise activate nu | save -f ($nu.data-dir | path join "vendor/autoload/mise.nu")
