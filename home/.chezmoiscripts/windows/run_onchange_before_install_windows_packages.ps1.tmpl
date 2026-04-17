@@ -1,6 +1,12 @@
 # vim: set ft=powershell:
-# {{ if eq .chezmoi.os "windows" }}
+# hash: {{ include ".chezmoidata/packages.yaml" | sha256sum }}
+{{ if eq .chezmoi.os "windows" }}
 
+########
+# Scoop
+########
+
+# Install Scoop
 Set-ExecutionPolicy Bypass -Scope Process -Force
 if (-not (Get-Command scoop -ErrorAction SilentlyContinue))
 {
@@ -15,19 +21,55 @@ if (-not (Get-Command scoop -ErrorAction SilentlyContinue))
     Write-Host "Scoop is already installed." -ForegroundColor Green
 }
 
-Write-Host "Adding Scoop Buckets..."
-# {{ range $name, $url := .packages.scoop_buckets -}}
-scoop bucket add {{ $name }} {{ $url }}
-# {{ end }}
+# Add required buckets
+Write-Host "Adding Scoop Buckets..." -ForegroundColor Cyan
 
-# {{- $all_apps := list -}}
+$currentBuckets = scoop bucket list
+{{ range .scoop_buckets -}}
+    if (-not ($currentBuckets -match "{{ .name }}")) {
+        scoop bucket add {{ .name }} {{ .url }}
+    }
+{{ end }}
 
-# {{- range .packages.essentials -}}
-#   {{- if hasKey . "scoop" }}{{ $all_apps = append $all_apps (index . "scoop") }}{{ end -}}
-# {{- end -}}
-# {{- range $all_apps }}
-Write-Host "Installing {{ . }}..."
-scoop install {{ . }}
-# {{- end }}
+scoop update
 
-# {{ end }}
+# Make list of desired Scoop packages
+$desiredScoopPackages = @(
+{{- range .packages -}}
+  {{- if .scoop -}}
+    {{- $shouldInstall := false -}}
+    {{- if eq .category "essentials" -}}
+      {{- $shouldInstall = true -}}
+    {{- else if and (eq .category "general") (not $.ephemeral) -}}
+      {{- $shouldInstall = true -}}
+    {{- else if and (eq .category "personal") $.personal -}}
+      {{- $shouldInstall = true -}}
+    {{- else if and (eq .category "gui") (not $.headless) -}}
+      {{- $shouldInstall = true -}}
+    {{- end -}}
+
+    {{- if $shouldInstall -}}
+    "{{ .scoop }}",
+    {{- end -}}
+  {{- end -}}
+{{- end }}
+    ""
+) | Where-Object { $_ -ne "" } # HACK: we use empty element here to not deal with ending comma
+
+# Install Scoop packages
+if ($desiredScoopPackages.Count -gt 0) {
+    $installed = Get-ChildItem -Path "$env:USERPROFILE\scoop\apps" | Select-Object -ExpandProperty Name
+    $toInstall = $desiredScoopPackages | Where-Object { $_ -notin $installed }
+
+    if ($toInstall) {
+        Write-Host "Installing missing Scoop packages..." -ForegroundColor Cyan
+        foreach ($pkg in $toInstall) {
+            Write-Host "Installing $pkg..." -ForegroundColor Gray
+            scoop install $pkg
+        }
+    } else {
+        Write-Host "All Scoop packages are up to date." -ForegroundColor Green
+    }
+}
+
+{{ end }}

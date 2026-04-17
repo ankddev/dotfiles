@@ -1,38 +1,122 @@
+# packages:
+
+#   # Tools installed with cargo install or cargo binstall
+#   rust:
+#     - id: cargo-nextest
+#     - id: cargo-insta
+#     - id: cargo-deny
+#     - id: cargo-update
+#     - id: cargo-cache
+
+#   # Here, you can specify id of the package and name in different PMs:
+#   # - apt
+#   # - dnf
+#   # - pacman
+#   # - aur (paru, etc.)
+#   # - brew (mainly macOS) and cask
+#   # - scoop
+#   # - winget
+
+#   essentials:
+#     # Common essentials
+
+scoop_buckets:
+  - name: main
+    url: https://github.com/ScoopInstaller/Main.git
+  - name: extras
+    url: https://github.com/ScoopInstaller/Extras
+  - name: versions
+    url: https://github.com/ScoopInstaller/Versions
+  - name: nerd-fonts
+    url: https://github.com/matthewjberger/scoop-nerd-fonts
+
 packages:
-  scoop_buckets:
-    - name: main
-      url: https://github.com/ScoopInstaller/Main.git
-    - name: extras
-      url: https://github.com/ScoopInstaller/Extras
-    - name: versions
-      url: https://github.com/ScoopInstaller/Versions
-    - name: nerd-fonts
-      url: https://github.com/matthewjberger/scoop-nerd-fonts
-
-  # Tools installed with cargo install or cargo binstall
-  rust:
-    - id: cargo-nextest
-    - id: cargo-insta
-    - id: cargo-deny
-    - id: cargo-update
-    - id: cargo-cache
-
-  # Here, you can specify id of the package and name in different PMs:
+  # Here, you can specify id of the package, category:
+  #
+  # - essentials (installed everywhere)
+  # - general (only on non-ephemeral machines, includes toolchains)
+  # - personal (only on personal machines)
+  # - gui (only on non-headless machines)
+  #
+  # and name in different PMs:
+  #
   # - apt
   # - dnf
   # - pacman
-  # - aur (paru, etc.)
+  # - aur (paru is used)
   # - brew (mainly macOS) and cask
   # - scoop
   # - winget
+  # - cargo
+  # - mise
+  #   - name (including backend)
+  #   - versions (either string or array)
+  # - npm
+  # - windows_script (command to install on windows)
+  # - darwin_script (command to install on macos)
+  # - linux_script (command to install on linux and other unixes)
 
-  essentials:
-    # Common essentials
-    - id: fd-find
-      apt: fd-find
-      dnf: fd-find
-      pacman: fd
-      brew: fd
-      scoop: fd
-    - id: neovim
-      scoop: neovim
+  # Essentials
+
+  - id: Vim
+    category: essentials
+
+    apt: vim
+    dnf: vim
+    pacman: vim
+    brew: vim
+    scoop: vim
+
+  - id: ripgrep
+    category: essentials
+
+    apt: ripgrep
+    dnf: ripgrep
+    pacman: ripgrep
+    brew: ripgrep
+    scoop: ripgrep
+
+  - id: bat aka batcat
+    category: essentials
+
+    apt: batcat
+    dnf: bat
+    pacman: bat
+    brew: bat
+    scoop: bat
+
+  - id: fd
+    category: essentials
+
+    apt: fd-find
+    dnf: fd-find
+    pacman: fd
+    brew: fd
+    scoop: fd
+
+  - id: NeoVim
+    category: essentials
+
+    apt: neovim
+    dnf: neovim
+    pacman: neovim
+    brew: neovim
+    scoop: neovim
+
+  - id: Nushell
+    category: essentials
+
+    apt: nushell
+    dnf: nushell
+    pacman: nushell
+    brew: nushell
+    scoop: nu
+
+  - id: just
+    category: essentials
+
+    apt: just
+    dnf: just
+    pacman: just
+    brew: just
+    scoop: just
