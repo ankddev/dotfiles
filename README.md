@@ -21,6 +21,7 @@ This repo includes my configs for:
 - gh-dash
 - NPM
 - gh-changelog
+- ...and more!
 ## List of software
 You can find list of software that I will probably install [here](./SOFTWARE.md).
 ## License
