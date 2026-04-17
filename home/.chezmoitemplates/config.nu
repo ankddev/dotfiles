@@ -80,9 +80,9 @@ def is-success [closure: closure] {
 
 # Unlock Bitwarden vault via CLI
 def --env bwu [] {
-    let pass = (python -c "import keyring; print(keyring.get_password('Bitwarden', '{{ .email }}'))" | str trim)
+    let pass = (uv tool run keyring get Bitwarden {{ .email }} | str trim)
     if ($pass == "None" or ($pass | is-empty)) {
-        error make {msg: $"Password not found in keyring! Please execute `python -c \"import keyring; keyring.set_password\('Bitwarden', '<email>', '<pass>'\)\"`"}
+        error make {msg: $"Password not found in keyring! Please execute `uv tool run keyring set Bitwarden <email> <pass>`"}
     }
 
     let session = (bw unlock $pass --raw)
