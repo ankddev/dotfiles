@@ -1,0 +1,218 @@
+# vim: set ft=gotmpl:
+# ^^^ We use gotmpl filetype since yaml-language-server formats templates wrongly
+scoop_buckets:
+  - name: main
+    url: https://github.com/ScoopInstaller/Main.git
+  - name: extras
+    url: https://github.com/ScoopInstaller/Extras
+  - name: versions
+    url: https://github.com/ScoopInstaller/Versions
+  - name: nerd-fonts
+    url: https://github.com/matthewjberger/scoop-nerd-fonts
+
+# Python versions to install with uv
+uv_pythons:
+  - 3.15
+  - 3.15t
+  - 3.14
+  - 3.12
+
+packages:
+  # Here you can specify id of the package and name in different PMs:
+  #
+  # - apt
+  # - dnf
+  # - pacman
+  # - aur (paru is used)
+  # - brew (mainly macOS) and cask
+  # - scoop
+  # - winget
+  # - cargo
+  # - npm
+  # - snap
+  # - uv_tool
+  # - pip
+  # - mise
+  #   - name
+  #   - versions (array)
+  # - classic_snap
+  # - windows_script (command to install on windows; limitation: it runs without
+  #   admin, so you will need to add self-elevation to runned script)
+  # - darwin_script (command to install on macos; it runs without sudo)
+  # - linux_script (command to install on linux and other unixes; it runs without sudo)
+  #
+  # Also, you should specify boolean `install` field, which can contain just
+  # `true` or `false` or template value.
+
+  - id: build-essential
+    install: {{ or (eq .osid "linux-ubuntu") (eq .osid "linux-debian") }}
+    apt: build-essential
+
+  # Essentials
+
+  - id: Vim
+    install: true
+    apt: vim
+    dnf: vim
+    pacman: vim
+    brew: vim
+    scoop: vim
+
+  - id: ripgrep
+    install: true
+    apt: ripgrep
+    dnf: ripgrep
+    pacman: ripgrep
+    brew: ripgrep
+    scoop: ripgrep
+
+  - id: bat aka batcat
+    install: true
+    apt: batcat
+    dnf: bat
+    pacman: bat
+    brew: bat
+    scoop: bat
+
+  - id: fd
+    install: true
+    apt: fd-find
+    dnf: fd-find
+    pacman: fd
+    brew: fd
+    scoop: fd
+
+  - id: NeoVim
+    install: true
+    apt: neovim
+    dnf: neovim
+    pacman: neovim
+    brew: neovim
+    scoop: neovim
+
+  - id: Nushell
+    install: true
+    apt: nushell
+    dnf: nushell
+    pacman: nushell
+    brew: nushell
+    scoop: nu
+
+  - id: just
+    install: true
+    apt: just
+    dnf: just
+    pacman: just
+    brew: just
+    scoop: just
+
+  - id: mise
+    install: true
+    linux_script: |
+      curl https://mise.run | sh
+    brew: mise
+    scoop: mise
+
+  - id: git
+    install: true
+    apt: git
+    dnf: git
+    pacman: git
+    brew: git
+
+  - id: git-lfs
+    install: true
+    scoop: git-lfs
+    apt: git-lfs
+    dnf: git-lfs
+    pacman: git-lfs
+    brew: git-lfs
+
+  - id: curl
+    install: true
+    scoop: curl
+    apt: curl
+    dnf: curl
+    pacman: curl
+    brew: curl
+
+  - id: Bun
+    install: {{ not (lookPath "bun") }}
+    windows_script: |
+      irm bun.sh/install.ps1 | iex
+    linux_script: |
+      curl -fsSL https://bun.sh/install | bash
+    darwin_script: |
+      curl -fsSL https://bun.sh/install | bash
+
+  - id: Node.js
+    install: true
+    mise:
+      name: node
+      versions:
+        - lts
+        - 22
+        - 20
+
+  # I use several uv-managed Pythons, but this one is default
+  - id: Python 3
+    install: true
+    scoop: python
+    brew: python
+    apt: python3
+    dnf: python3
+    pacman: python
+
+  - id: uv
+    install: {{ not (lookPath "uv") }}
+    linux_script: |
+      curl -LsSf https://astral.sh/uv/install.sh | sh
+    brew: uv
+    scoop: uv
+
+  # Rust utilities
+
+  - id: cargo-binstall
+    install: {{ and (not (lookPath "cargo-binstall")) (not .ephemeral) }}
+    linux_script: |
+      curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+    windows_script: |
+      Set-ExecutionPolicy Unrestricted -Scope Process; iex (iwr "https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.ps1").Content
+
+  - id: cargo-deny
+    install: {{ and (not (lookPath "cargo-deny")) (not .ephemeral) }}
+    cargo: cargo-deny
+
+  - id: cargo-update
+    install: {{ and (not (lookPath "cargo-install-update")) (not .ephemeral) }}
+    cargo: cargo-update
+
+  - id: cargo-bloat
+    install: {{ and (not (lookPath "cargo-bloat")) (not .ephemeral) }}
+    cargo: cargo-bloat
+
+  - id: cargo-cache
+    install: {{ and (not (lookPath "cargo-cache")) (not .ephemeral) }}
+    cargo: cargo-cache
+
+  # uv tools
+
+  - id: ty
+    install: true
+    uv_tool: ty
+
+  - id: pyrefly
+    install: true
+    uv_tool: pyrefly
+
+  - id: ruff
+    install: true
+    uv_tool: ruff
+
+  - id: black
+    install: true
+    uv_tool: black
+
+  - id: jc
+    install: true
+    uv_tool: jc
