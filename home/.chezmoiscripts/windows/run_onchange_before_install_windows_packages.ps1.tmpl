@@ -1,6 +1,39 @@
 # vim: set ft=powershell:
-# hash: {{ include ".chezmoidata/packages.yaml" | sha256sum }}
+# hash: {{ include ".chezmoitemplates/packages.yaml" | sha256sum }}
 {{ if eq .chezmoi.os "windows" }}
+{{ $pkgData := includeTemplate ".chezmoitemplates/packages.yaml" . | fromYaml -}}
+
+{{ $scoopPackages := list }}
+{{ $wingetPackages := list }}
+{{ $cargoPackages := list }}
+{{ $uvTools := list }}
+{{ $npmPackages := list }}
+{{ $pipPackages := list }}
+{{ $miseTools := list }}
+{{ $installScripts := list }}
+
+# Make lists of package for PMs
+{{ range $pkgData.packages }}
+{{   if and (hasKey . "install") (.install) }}
+{{     if hasKey . "scoop" }}
+{{       $scoopPackages = mustAppend $scoopPackages .scoop }}
+{{     else if hasKey . "winget" }}
+{{       $wingetPackages = mustAppend $wingetPackages .winget }}
+{{     else if hasKey . "windows_script" }}
+{{       $installScripts = mustAppend $installScripts .windows_script }}
+{{     else if hasKey . "cargo" }}
+{{       $cargoPackages = mustAppend $cargoPackages .cargo }}
+{{     else if hasKey . "uv_tool" }}
+{{       $uvTools = mustAppend $uvTools .uv_tool }}
+{{     else if hasKey . "npm" }}
+{{       $npmPackages = mustAppend $npmPackages .npm }}
+{{     else if hasKey . "pip" }}
+{{       $pipPackages = mustAppend $pipPackages .pip }}
+{{     else if hasKey . "mise" }}
+{{       $miseTools = mustAppend $miseTools .mise }}
+{{     end }}
+{{   end }}
+{{ end }}
 
 ########
 # Scoop
@@ -25,51 +58,193 @@ if (-not (Get-Command scoop -ErrorAction SilentlyContinue))
 Write-Host "Adding Scoop Buckets..." -ForegroundColor Cyan
 
 $currentBuckets = scoop bucket list
-{{ range .scoop_buckets -}}
-    if (-not ($currentBuckets -match "{{ .name }}")) {
-        scoop bucket add {{ .name }} {{ .url }}
-    }
+{{ range $pkgData.scoop_buckets -}}
+if (-not ($currentBuckets -match "{{ .name }}"))
+{
+    scoop bucket add {{ .name }} {{ .url }}
+} else
+{
+    Write-Host "Bucket {{ .name }} is already added." -ForegroundColor DarkGray
+}
 {{ end }}
 
-scoop update
-
-# Make list of desired Scoop packages
-$desiredScoopPackages = @(
-{{- range .packages -}}
-  {{- if .scoop -}}
-    {{- $shouldInstall := false -}}
-    {{- if eq .category "essentials" -}}
-      {{- $shouldInstall = true -}}
-    {{- else if and (eq .category "general") (not $.ephemeral) -}}
-      {{- $shouldInstall = true -}}
-    {{- else if and (eq .category "personal") $.personal -}}
-      {{- $shouldInstall = true -}}
-    {{- else if and (eq .category "gui") (not $.headless) -}}
-      {{- $shouldInstall = true -}}
-    {{- end -}}
-
-    {{- if $shouldInstall -}}
-    "{{ .scoop }}",
-    {{- end -}}
-  {{- end -}}
-{{- end }}
-    ""
-) | Where-Object { $_ -ne "" } # HACK: we use empty element here to not deal with ending comma
+# scoop update
 
 # Install Scoop packages
-if ($desiredScoopPackages.Count -gt 0) {
-    $installed = Get-ChildItem -Path "$env:USERPROFILE\scoop\apps" | Select-Object -ExpandProperty Name
-    $toInstall = $desiredScoopPackages | Where-Object { $_ -notin $installed }
+$scoopInstalled = Get-ChildItem -Path "$env:USERPROFILE\scoop\apps" | Select-Object -ExpandProperty Name
 
-    if ($toInstall) {
-        Write-Host "Installing missing Scoop packages..." -ForegroundColor Cyan
-        foreach ($pkg in $toInstall) {
-            Write-Host "Installing $pkg..." -ForegroundColor Gray
-            scoop install $pkg
-        }
-    } else {
-        Write-Host "All Scoop packages are up to date." -ForegroundColor Green
+Write-Host "Installing missing Scoop packages..." -ForegroundColor Cyan
+{{ range $scoopPackages }}
+if ("{{ . }}" -notin $scoopInstalled)
+{
+    Write-Host "Installing {{ . }}..." -ForegroundColor Gray
+    scoop install {{ . }}
+} else
+{
+    Write-Host "{{ . }} is already installed." -ForegroundColor DarkGray
+}
+{{ end }}
+
+#########
+# WinGet
+#########
+
+Write-Host "Installing missing WinGet packages..." -ForegroundColor Cyan
+{{ range $wingetPackages }}
+winget list --id "{{ . }}" --exact --source winget --accept-source-agreements > $null 2>&1
+
+if ($LASTEXITCODE -ne 0)
+{
+    Write-Host "Installing {{ . }}..." -ForegroundColor Gray
+    winget install --id "{{ . }}" --silent --accept-source-agreements --accept-package-agreements
+} else
+{
+    Write-Host "{{ . }} is already installed." -ForegroundColor DarkGray
+}
+{{ end }}
+
+##########################
+# Windows install scripts
+##########################
+
+Write-Host "Installing missing software via install scripts..." -ForegroundColor Cyan
+
+{{ range $installScripts }}
+Write-Host "Installing via {{ . }}..." -ForegroundColor Gray
+{{   . }}
+{{ end }}
+
+#######
+# Mise
+#######
+
+# Add mise shims to global Path, so they are accessible not only in Nu
+$miseDataDir = "$env:LOCALAPPDATA\mise"
+$miseShims = "$miseDataDir\shims"
+$miseBin = Split-Path (Get-Command mise).Source -Parent
+$registryPath = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("Environment").GetValue("Path", $null, "DoNotExpandEnvironmentNames")
+$pathsToAdd = @($miseBin, $miseShims)
+$currentPaths = $registryPath -split [IO.Path]::PathSeparator
+$missingPaths = @()
+
+foreach ($p in $pathsToAdd) {
+    if ($currentPaths -notcontains $p) {
+        $missingPaths += $p
     }
+}
+
+if ($missingPaths.Count -gt 0) {
+    $newPath = ($missingPaths + $currentPaths) -join [IO.Path]::PathSeparator
+    [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+    Write-Host "Added to PATH: $($missingPaths -join ', ')"
+}
+
+# Install mise tools
+Write-Host "Installing missing software via mise..." -ForegroundColor Cyan
+
+{{ range $miseTools }}
+{{   if and (hasKey . "name") (hasKey . "versions") }}
+Write-Host "Installing {{ .name }} via mise..." -ForegroundColor Gray
+mise use -g node@{{ .versions | join " node@" }}
+{{   end }}
+{{ end }}
+
+# Update Path
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+$extraPaths = @(
+    "$env:USERPROFILE\.local\bin",
+    "$env:USERPROFILE\scoop\shims"
+)
+
+foreach ($path in $extraPaths)
+{
+    if ($env:Path -notlike "*$path*")
+    {
+        $env:Path += ";$path"
+    }
+}
+
+#############
+# uv Pythons
+#############
+
+{{ if not .ephemeral }}
+Write-Host "Installing missing Python toolchains via uv..." -ForegroundColor Cyan
+
+{{   range $pkgData.uv_pythons }}
+Write-Host "Installing Python {{ . }}..." -ForegroundColor Gray
+uv python install {{ . }}
+{{   end }}
+
+{{ end }}
+
+###########
+# uv tools
+###########
+
+Write-Host "Installing missing tools via uv..." -ForegroundColor Cyan
+
+$currentUvTools = uv tool list
+{{ range $uvTools }}
+if (-not ($currentUvTools -match "{{ . }}"))
+{
+    Write-Host "Installing {{ . }}..." -ForegroundColor Gray
+    uv tool install {{ . }}
+} else
+{
+    Write-Host "{{ . }} is already installed." -ForegroundColor DarkGray
+}
+{{ end }}
+
+###############
+# pip packages
+###############
+
+Write-Host "Installing missing pip packages..." -ForegroundColor Cyan
+
+{{ range $pipPackages }}
+Write-Host "Installing {{ . }}..." -ForegroundColor Gray
+uv pip install --system {{ . }}
+{{ end }}
+
+###############
+# npm packages
+###############
+
+Write-Host "Installing missing npm packages..." -ForegroundColor Cyan
+
+{{ range $npmPackages }}
+Write-Host "Installing {{ . }}..." -ForegroundColor Gray
+npm install --global {{ . }}
+{{ end }}
+
+#######
+# Rust
+#######
+
+{{ if and (not .ephemeral) (not (lookPath "rustup")) -}}
+Write-Host "Installing Rust (MSVC by default)..." -ForegroundColor Cyan
+
+winget install Rustlang.Rustup --source winget --silent --accept-package-agreements --accept-source-agreements
+
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+$env:Path += ";$env:USERPROFILE\.cargo\bin"
+{{- end }}
+
+#############
+# Rust tools
+#############
+
+if (Get-Command "cargo" -ErrorAction SilentlyContinue)
+{
+    Write-Host "Installing missing Cargo packages..." -ForegroundColor Cyan
+    {{ range $cargoPackages }}
+    Write-Host "Installing {{ . }}..." -ForegroundColor Gray
+    cargo binstall --no-confirm {{ . }}
+    {{ end }}
+} else
+{
+    Write-Host "Rust doesn't exists, so skipping installation of all Cargo packages" -ForegroundColor DarkGray
 }
 
 {{ end }}
