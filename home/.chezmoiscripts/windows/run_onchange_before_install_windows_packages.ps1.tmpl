@@ -68,7 +68,7 @@ if (-not ($currentBuckets -match "{{ .name }}"))
 }
 {{ end }}
 
-# scoop update
+scoop update
 
 # Install Scoop packages
 $scoopInstalled = Get-ChildItem -Path "$env:USERPROFILE\scoop\apps" | Select-Object -ExpandProperty Name
@@ -127,13 +127,16 @@ $pathsToAdd = @($miseBin, $miseShims)
 $currentPaths = $registryPath -split [IO.Path]::PathSeparator
 $missingPaths = @()
 
-foreach ($p in $pathsToAdd) {
-    if ($currentPaths -notcontains $p) {
+foreach ($p in $pathsToAdd)
+{
+    if ($currentPaths -notcontains $p)
+    {
         $missingPaths += $p
     }
 }
 
-if ($missingPaths.Count -gt 0) {
+if ($missingPaths.Count -gt 0)
+{
     $newPath = ($missingPaths + $currentPaths) -join [IO.Path]::PathSeparator
     [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
     Write-Host "Added to PATH: $($missingPaths -join ', ')"
