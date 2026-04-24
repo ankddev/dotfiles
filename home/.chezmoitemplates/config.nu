@@ -80,12 +80,7 @@ def is-success [closure: closure] {
 
 # Unlock Bitwarden vault via CLI
 def --env bwu [] {
-    let pass = (uv tool run keyring get Bitwarden {{ .email }} | str trim)
-    if ($pass == "None" or ($pass | is-empty)) {
-        error make {msg: $"Password not found in keyring! Please execute `uv tool run keyring set Bitwarden <email> <pass>`"}
-    }
-
-    let session = (bw unlock $pass --raw)
+    let session = (bw unlock --raw)
 
     if ($env | get -o BW_SESSION | is-not-empty) {
         $env.BW_SESSION = $session
