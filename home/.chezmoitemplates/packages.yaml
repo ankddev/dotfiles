@@ -71,6 +71,14 @@ packages:
     brew: vim
     scoop: vim
 
+  - id: unzip
+    install: true
+    apt: unzip
+    dnf: unzip
+    pacman: unzip
+    brew: unzip
+    scoop: unzip
+
   - id: ripgrep
     install: true
     apt: ripgrep
