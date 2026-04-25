@@ -7,6 +7,7 @@ Zed
 {{ if ne .chezmoi.os "windows" }}
 AppData/
 .wslconfig
+.chezmoiscripts/windows/*
 {{ end }}
 
 # Unix-specific
@@ -17,11 +18,13 @@ AppData/
 # Linux and Android-specific
 {{ if and (ne .chezmoi.os "linux") (ne .chezmoi.os "android") }}
 .config/nushell/
+.chezmoiscripts/linux/*
 {{ end }}
 
 # macOS-specific
 {{ if ne .chezmoi.os "darwin" }}
 Library/
+.chezmoiscripts/darwin/*
 {{ end }}
 
 # GUI-specific
