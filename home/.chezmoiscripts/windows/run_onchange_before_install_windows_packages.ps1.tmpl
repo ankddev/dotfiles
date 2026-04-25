@@ -75,15 +75,17 @@ if (-not (Get-Command scoop -ErrorAction SilentlyContinue))
     Write-Host "Scoop is already installed." -ForegroundColor Green
 }
 
+{{ if $pkgData.scoop_buckets }}
 # Add required buckets
 Write-Host "Adding Scoop Buckets..." -ForegroundColor Cyan
 
 $currentBuckets = scoop bucket list
-{{ range $pkgData.scoop_buckets -}}
+{{   range $pkgData.scoop_buckets -}}
 if (-not ($currentBuckets -match "{{ .name }}"))
 {
     scoop bucket add {{ .name }} {{ .url }}
 }
+{{   end }}
 {{ end }}
 
 scoop update
@@ -91,13 +93,15 @@ scoop update
 # Install Scoop packages
 $scoopInstalled = Get-ChildItem -Path "$env:USERPROFILE\scoop\apps" | Select-Object -ExpandProperty Name
 
+{{ if $scoopPackages }}
 Write-Host "Installing missing Scoop packages..." -ForegroundColor Cyan
-{{ range $scoopPackages }}
+{{   range $scoopPackages }}
 if ("{{ . }}" -notin $scoopInstalled)
 {
     Write-Host "Installing {{ . }}..." -ForegroundColor Gray
     scoop install {{ . }}
 }
+{{   end }}
 {{ end }}
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
@@ -107,14 +111,16 @@ Add-ToUserPath -PathToAdd "$env:USERPROFILE\scoop\shims"
 # WinGet
 #########
 
+{{ if $wingetPackages }}
 Write-Host "Installing missing WinGet packages..." -ForegroundColor Cyan
-{{ range $wingetPackages }}
+{{   range $wingetPackages }}
 winget list --id "{{ . }}" --exact --source winget --accept-source-agreements > $null 2>&1
 
 if ($LASTEXITCODE -ne 0)
 {
     winget install --id "{{ . }}" --silent --accept-source-agreements --accept-package-agreements
 }
+{{   end }}
 {{ end }}
 
 ##########################
@@ -140,10 +146,12 @@ $miseShims = "$miseDataDir\shims"
 
 Add-ToUserPath -PathToAdd $miseShims
 
+{{ if $miseTools }}
 # Install mise tools
 Write-Host "Installing missing software via mise..." -ForegroundColor Cyan
 
 mise use -g {{ range $miseTools }}{{ $name := .name }}{{ range .versions }}{{ $name }}@{{ . }} {{ end }}{{ end }}
+{{ end }}
 
 # Update Path
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
@@ -152,7 +160,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 # uv Pythons
 #############
 
-{{ if not .ephemeral }}
+{{ if and (not .ephemeral) ($pkgData.uv_pythons) }}
 Write-Host "Installing missing Python toolchains via uv..." -ForegroundColor Cyan
 uv python install {{ $pkgData.uv_pythons | join " " }}
 {{ end }}
@@ -161,30 +169,35 @@ uv python install {{ $pkgData.uv_pythons | join " " }}
 # uv tools
 ###########
 
+{{ if $uvTools }}
 Write-Host "Installing missing tools via uv..." -ForegroundColor Cyan
 
 [string]$currentUvTools = uv tool list
-{{ range $uvTools }}
+{{   range $uvTools }}
 if (-not ($currentUvTools -match "{{ . }}"))
 {
     uv tool install {{ . }}
 }
+{{   end }}
 {{ end }}
 
 ###############
 # pip packages
 ###############
 
+{{ if $pipPackages }}
 Write-Host "Installing missing pip packages..." -ForegroundColor Cyan
-
 uv pip install --system {{ $pipPackages | join " " }}
+{{ end }}
 
 ###############
 # npm packages
 ###############
 
+{{ if $npmPackages }}
 Write-Host "Installing missing npm packages..." -ForegroundColor Cyan
 npm install --global {{ $npmPackages | join " " }}
+{{ end }}
 
 #############
 # Rust tools
@@ -193,8 +206,10 @@ npm install --global {{ $npmPackages | join " " }}
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 Add-ToUserPath -PathToAdd "$env:USERPROFILE\.cargo\bin"
 
+{{ if $cargoPackages }}
 if (Get-Command "cargo" -ErrorAction SilentlyContinue)
 {
     Write-Host "Installing missing Cargo packages..." -ForegroundColor Cyan
     cargo binstall --no-confirm {{ $cargoPackages | join " " }}
 }
+{{ end }}

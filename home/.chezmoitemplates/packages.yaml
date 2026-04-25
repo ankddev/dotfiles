@@ -117,6 +117,14 @@ packages:
     brew: nushell
     scoop: nu
 
+  - id: Starship
+    install: true
+    apt: starship
+    dnf: starship
+    pacman: starship
+    brew: starship
+    scoop: starship
+
   - id: just
     install: true
     apt: just
