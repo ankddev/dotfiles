@@ -1,14 +1,19 @@
 # vim: set ft=powershell:
 # hash: {{ include ".chezmoitemplates/packages.yaml" | sha256sum }}
-{{ if eq .chezmoi.os "windows" }}
 
-function Add-ToUserPath {
+function Add-ToUserPath
+{
     param([string]$PathToAdd)
 
     $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
 
-    if ($userPath -split ';' -notcontains $PathToAdd) {
-        $newPath = if ([string]::IsNullOrWhiteSpace($userPath)) { $PathToAdd } else { "$userPath;$PathToAdd" }
+    if ($userPath -split ';' -notcontains $PathToAdd)
+    {
+        $newPath = if ([string]::IsNullOrWhiteSpace($userPath))
+        { $PathToAdd
+        } else
+        { "$userPath;$PathToAdd"
+        }
 
         [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
 
@@ -78,9 +83,6 @@ $currentBuckets = scoop bucket list
 if (-not ($currentBuckets -match "{{ .name }}"))
 {
     scoop bucket add {{ .name }} {{ .url }}
-} else
-{
-    Write-Host "Bucket {{ .name }} is already added." -ForegroundColor DarkGray
 }
 {{ end }}
 
@@ -95,9 +97,6 @@ if ("{{ . }}" -notin $scoopInstalled)
 {
     Write-Host "Installing {{ . }}..." -ForegroundColor Gray
     scoop install {{ . }}
-} else
-{
-    Write-Host "{{ . }} is already installed." -ForegroundColor DarkGray
 }
 {{ end }}
 
@@ -114,11 +113,7 @@ winget list --id "{{ . }}" --exact --source winget --accept-source-agreements > 
 
 if ($LASTEXITCODE -ne 0)
 {
-    Write-Host "Installing {{ . }}..." -ForegroundColor Gray
     winget install --id "{{ . }}" --silent --accept-source-agreements --accept-package-agreements
-} else
-{
-    Write-Host "{{ . }} is already installed." -ForegroundColor DarkGray
 }
 {{ end }}
 
@@ -148,13 +143,7 @@ Add-ToUserPath -PathToAdd $miseShims
 # Install mise tools
 Write-Host "Installing missing software via mise..." -ForegroundColor Cyan
 
-{{ range $miseTools }}
-{{   if and (hasKey . "name") (hasKey . "versions") }}
-Write-Host "Installing {{ .name }} via mise..." -ForegroundColor Gray
-{{     $name := .name -}}
-mise use -g {{ range .versions }}{{ $name }}@{{ . }} {{ end }}
-{{   end }}
-{{ end }}
+mise use -g {{ range $miseTools }}{{ $name := .name }}{{ range .versions }}{{ $name }}@{{ . }} {{ end }}{{ end }}
 
 # Update Path
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
@@ -165,12 +154,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 
 {{ if not .ephemeral }}
 Write-Host "Installing missing Python toolchains via uv..." -ForegroundColor Cyan
-
-{{   range $pkgData.uv_pythons }}
-Write-Host "Installing Python {{ . }}..." -ForegroundColor Gray
-uv python install {{ . }}
-{{   end }}
-
+uv python install {{ $pkgData.uv_pythons | join " " }}
 {{ end }}
 
 ###########
@@ -179,15 +163,11 @@ uv python install {{ . }}
 
 Write-Host "Installing missing tools via uv..." -ForegroundColor Cyan
 
-$currentUvTools = uv tool list
+[string]$currentUvTools = uv tool list
 {{ range $uvTools }}
 if (-not ($currentUvTools -match "{{ . }}"))
 {
-    Write-Host "Installing {{ . }}..." -ForegroundColor Gray
     uv tool install {{ . }}
-} else
-{
-    Write-Host "{{ . }} is already installed." -ForegroundColor DarkGray
 }
 {{ end }}
 
@@ -197,49 +177,24 @@ if (-not ($currentUvTools -match "{{ . }}"))
 
 Write-Host "Installing missing pip packages..." -ForegroundColor Cyan
 
-{{ range $pipPackages }}
-Write-Host "Installing {{ . }}..." -ForegroundColor Gray
-uv pip install --system {{ . }}
-{{ end }}
+uv pip install --system {{ $pipPackages | join " " }}
 
 ###############
 # npm packages
 ###############
 
 Write-Host "Installing missing npm packages..." -ForegroundColor Cyan
-
-{{ range $npmPackages }}
-Write-Host "Installing {{ . }}..." -ForegroundColor Gray
-npm install --global {{ . }}
-{{ end }}
-
-#######
-# Rust
-#######
-
-{{ if and (not .ephemeral) (not (lookPath "rustup")) -}}
-Write-Host "Installing Rust (MSVC by default)..." -ForegroundColor Cyan
-
-winget install Rustlang.Rustup --source winget --silent --accept-package-agreements --accept-source-agreements
-
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-Add-ToUserPath -PathToAdd "$env:USERPROFILE\.cargo\bin"
-{{- end }}
+npm install --global {{ $npmPackages | join " " }}
 
 #############
 # Rust tools
 #############
 
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+Add-ToUserPath -PathToAdd "$env:USERPROFILE\.cargo\bin"
+
 if (Get-Command "cargo" -ErrorAction SilentlyContinue)
 {
     Write-Host "Installing missing Cargo packages..." -ForegroundColor Cyan
-    {{ range $cargoPackages }}
-    Write-Host "Installing {{ . }}..." -ForegroundColor Gray
-    cargo binstall --no-confirm {{ . }}
-    {{ end }}
-} else
-{
-    Write-Host "Rust doesn't exists, so skipping installation of all Cargo packages" -ForegroundColor DarkGray
+    cargo binstall --no-confirm {{ $cargoPackages | join " " }}
 }
-
-{{ end }}
