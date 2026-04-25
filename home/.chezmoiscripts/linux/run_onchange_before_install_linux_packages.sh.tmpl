@@ -84,7 +84,7 @@ echo "Installing packages with DNF..."
 {{ if and ($hasPacman) ($pacmanPackages) }}
 echo "Installing packages with Pacman..."
 {{   $sudo }}pacman -Syu
-{{   $sudo }}pacman -S {{ $pacmanPackages | join " " }}
+{{   $sudo }}pacman -S --needed {{ $pacmanPackages | join " " }}
 {{ end }}
 
 #######
@@ -127,7 +127,7 @@ hash -r
 if [ -x "$(command -v paru)" ]; then
     echo "Installing AUR packages..."
     paru -Syu
-    paru -S {{ $aurPackages | join " " }}
+    paru -S --needed {{ $aurPackages | join " " }}
 fi
 {{ end }}
 
