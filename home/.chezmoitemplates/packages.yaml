@@ -44,9 +44,28 @@ packages:
   # Also, you should specify boolean `install` field, which can contain just
   # `true` or `false` or template value.
 
-  - id: build-essential
-    install: {{ or (eq .osid "linux-ubuntu") (eq .osid "linux-debian") }}
+  - id: Core build tools
+    install: true
     apt: build-essential
+    pacman: base-devel
+    dnf: "@development-tools"
+
+  - id: which
+    install: true
+    apt: debianutils
+    dnf: which
+    pacman: which
+
+  - id: paru on Arch
+    install: {{ and (lookPath "pacman") (not (lookPath "paru")) }}
+    linux_script: |
+      sudo pacman -S --needed --noconfirm base-devel git
+      TEMP_DIR=$(mktemp -d)
+      git clone https://aur.archlinux.org/paru-bin.git "$TEMP_DIR"
+      pushd "$TEMP_DIR"
+      makepkg -si --noconfirm
+      popd
+      rm -rf "$TEMP_DIR"
 
   # Essentials
 
@@ -170,10 +189,18 @@ packages:
     brew: uv
     scoop: uv
 
-  # Rust utilities
+  # Rust & utilities
+
+  - id: rustup and Rust
+    install: {{ and (not .ephemeral) (not (lookPath "rustup")) }}
+    winget: Rustlang.Rustup
+    linux_script: |
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
   - id: cargo-binstall
     install: {{ and (not (lookPath "cargo-binstall")) (not .ephemeral) }}
+    darwin_script: |
+      curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
     linux_script: |
       curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
     windows_script: |
