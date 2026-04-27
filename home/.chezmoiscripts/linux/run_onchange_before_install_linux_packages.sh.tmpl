@@ -118,6 +118,8 @@ export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/share/mise/bin:$PATH"
 hash -r
 [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc" || true
+[ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile" || true
+[ -f "$HOME/.profile" ] && source "$HOME/.profile" || true
 
 #############
 # AUR (paru)
