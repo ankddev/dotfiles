@@ -195,8 +195,9 @@ packages:
 
   - id: uv
     install: {{ not (lookPath "uv") }}
+    # For some reason https://astral.sh/uv/install.sh fails to download on some machines
     linux_script: |
-      curl -LsSf https://astral.sh/uv/install.sh | sh
+      curl -LsSf https://github.com/astral-sh/uv/releases/download/0.11.7/uv-installer.sh | sh
     brew: uv
     scoop: uv
 
