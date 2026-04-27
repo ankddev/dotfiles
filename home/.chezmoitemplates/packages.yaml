@@ -56,11 +56,6 @@ packages:
     dnf: which
     pacman: which
 
-  - id: paru on Arch
-    install: {{ and (lookPath "pacman") (not (lookPath "paru")) }}
-    linux_script: |
-      sudo pacman -S --needed --noconfirm base-devel git && git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -si --noconfirm && cd .. && rm -rf paru-bin
-
   # Essentials
 
   - id: Vim
@@ -209,6 +204,11 @@ packages:
     winget: Rustlang.Rustup
     linux_script: |
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+  - id: paru on Arch
+    install: {{ and (lookPath "pacman") (not (lookPath "paru")) }}
+    linux_script: |
+      sudo pacman -S --needed --noconfirm base-devel git && git clone https://aur.archlinux.org/paru.git && cd paru && makepkg -si --noconfirm && cd .. && rm -rf paru
 
   - id: cargo-binstall
     install: {{ and (not (lookPath "cargo-binstall")) (not .ephemeral) }}
