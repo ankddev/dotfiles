@@ -56,6 +56,12 @@ packages:
     dnf: which
     pacman: which
 
+  # It installs paru-bin by default, but it may be needed to install from source if pacman is too fresh (requires Rust)
+  - id: paru on Arch
+    install: {{ and (lookPath "pacman") (not (lookPath "paru")) }}
+    linux_script: |
+      sudo pacman -S --needed --noconfirm base-devel git && git clone https://aur.archlinux.org/paru.git && cd paru && makepkg -si --noconfirm && cd .. && rm -rf paru
+
   # Essentials
 
   - id: Vim
@@ -204,11 +210,6 @@ packages:
     winget: Rustlang.Rustup
     linux_script: |
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-  - id: paru on Arch
-    install: {{ and (lookPath "pacman") (not (lookPath "paru")) }}
-    linux_script: |
-      sudo pacman -S --needed --noconfirm base-devel git && git clone https://aur.archlinux.org/paru.git && cd paru && makepkg -si --noconfirm && cd .. && rm -rf paru
 
   - id: cargo-binstall
     install: {{ and (not (lookPath "cargo-binstall")) (not .ephemeral) }}
