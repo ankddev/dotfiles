@@ -10,9 +10,11 @@ function Add-ToUserPath
     if ($userPath -split ';' -notcontains $PathToAdd)
     {
         $newPath = if ([string]::IsNullOrWhiteSpace($userPath))
-        { $PathToAdd
+        {
+            $PathToAdd
         } else
-        { "$userPath;$PathToAdd"
+        {
+            "$userPath;$PathToAdd"
         }
 
         [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
