@@ -137,7 +137,7 @@ packages:
     scoop: just
 
   - id: mise
-    install: true
+    install: {{ not (lookPath "mise") }}
     linux_script: |
       curl https://mise.run | sh
     brew: mise
