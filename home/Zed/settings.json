@@ -1,4 +1,5 @@
 {
+  "cli_default_open_behavior": "existing_window",
   "ssh_connections": [
     {
       "host": "cs.vigilant-fiesta-5gxwg6996pgr2p4rg.main",

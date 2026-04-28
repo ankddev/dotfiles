@@ -138,7 +138,6 @@ packages:
 
   - id: mise
     install: true
-    aur: mise-bin
     linux_script: |
       curl https://mise.run | sh
     brew: mise
