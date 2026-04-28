@@ -138,6 +138,7 @@ packages:
 
   - id: mise
     install: {{ not (lookPath "mise") }}
+    pacman: mise
     linux_script: |
       curl https://mise.run | sh
     brew: mise
