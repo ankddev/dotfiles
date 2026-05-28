@@ -1,4 +1,10 @@
 {
+  "allow_rewrap": "anywhere",
+  "completion_menu_item_kind": "off",
+  "mouse_wheel_zoom": true,
+  "excerpt_context_lines": 2,
+  "code_lens": "on",
+  "completion_menu_scrollbar": "auto",
   "cli_default_open_behavior": "existing_window",
   "ssh_connections": [
     {
@@ -71,6 +77,7 @@
     },
   },
   "preview_tabs": {
+    "enabled": false,
     "enable_preview_from_multibuffer": false,
     "enable_keep_preview_on_code_navigation": true,
     "enable_preview_from_file_finder": false,
@@ -143,7 +150,7 @@
     "show_type_hints": true,
     "show_parameter_hints": true,
     "show_other_hints": true,
-    "show_background": true,
+    "show_background": false,
     "edit_debounce_ms": 700,
     "scroll_debounce_ms": 50,
     "toggle_on_modifiers_press": {
@@ -209,6 +216,9 @@
   },
   "wrap_guides": [80, 120],
   "terminal": {
+    "toolbar": {
+      "breadcrumbs": false,
+    },
     "show_count_badge": true,
     "font_size": 15,
     "font_family": "Maple Mono NF",
@@ -227,5 +237,12 @@
   "which_key": {
     "enabled": true,
     "delay_ms": 0,
+  },
+  "theme_overrides": {
+    // "Catppuccin Mocha": {
+    //   "border": "#1e1e2e",
+    //   "border.variant": "#1e1e2e",
+    //   "panel.background": "#1e1e2e",
+    // },
   },
 }
