@@ -124,10 +124,6 @@
   {
     "context": "VimControl && !menu || !Editor && !Terminal",
     "bindings": {
-      // window related commands (ctrl-w X)
-      "ctrl-w": null,
-      "ctrl-w shift-q": "workspace::CloseActiveDock",
-
       "shift-h": "workspace::ActivatePaneLeft",
       "shift-l": "workspace::ActivatePaneRight",
       "shift-k": "workspace::ActivatePaneUp",
