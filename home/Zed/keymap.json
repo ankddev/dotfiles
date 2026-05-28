@@ -1,5 +1,29 @@
 [
   {
+    "context": "menu",
+    "bindings": {
+      "ctrl-x": null,
+      "ctrl-x ctrl-a": null,
+      "ctrl-x ctrl-c": null,
+      "ctrl-x ctrl-e": null,
+      "ctrl-x ctrl-l": null,
+      "ctrl-x ctrl-o": null,
+      "ctrl-x ctrl-y": null,
+      "ctrl-x ctrl-z": null,
+    },
+  },
+  {
+    "bindings": {
+      "ctrl-w": null,
+      "ctrl-w shift-q": "workspace::CloseActiveDock",
+      "ctrl-w q": "pane::CloseActiveItem",
+      "ctrl-w h": "workspace::ActivatePaneLeft",
+      "ctrl-w l": "workspace::ActivatePaneRight",
+      "ctrl-w k": "workspace::ActivatePaneUp",
+      "ctrl-w j": "workspace::ActivatePaneDown",
+    },
+  },
+  {
     "context": "vim_mode == insert && !menu",
     "bindings": {
       "ctrl-x": "editor::ShowCompletions",
