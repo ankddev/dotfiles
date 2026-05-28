@@ -44,8 +44,10 @@
 
       // make arrow keys wrapping
       "left": "vim::WrappingLeft",
-      // make arrow keys wrapping
       "right": "vim::WrappingRight",
+
+      "alt-j": "editor::MoveLineDown",
+      "alt-k": "editor::MoveLineUp",
 
       // Word motions
       // "w": "vim::NextWordStart",
