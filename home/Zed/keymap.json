@@ -93,6 +93,9 @@
       "g .": "editor::ToggleCodeActions",
       "g shift-a": "editor::FindAllReferences",
       "g space": "editor::OpenExcerpts",
+      // Cherry-pick from Helix
+      "g z": "vim::HelixJumpToWord",
+      "g ctrl-t": "tab_switcher::OpenInActivePane",
 
       // Open something split
       "g p d": "editor::GoToDefinitionSplit",
