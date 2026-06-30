@@ -1,7 +1,7 @@
 # vim: ft=gitignore:
 # Common ignores
 .scripts
-# Zed
+.zed_config
 
 # Windows-specific
 {{ if ne .chezmoi.os "windows" }}
@@ -13,9 +13,15 @@ AppData/
 {{ if eq .chezmoi.os "windows" }}
 {{ end }}
 
-# Linux and Android-specific
-{{ if and (ne .chezmoi.os "linux") (ne .chezmoi.os "android") }}
+# Linux-specific
+{{ if and (ne .chezmoi.os "linux") }}
 .chezmoiscripts/linux/*
+{{ end }}
+
+# Android-specific
+{{ if and (ne .chezmoi.os "android") }}
+.chezmoiscripts/linux/*
+.chezmoiscripts/android/*
 {{ end }}
 
 # macOS-specific
@@ -26,6 +32,7 @@ Library/
 
 # GUI-specific
 {{ if .headless }}
-# .config/zed/
-# AppData/Roaming/Zed/
+# Zed
+.config/zed/
+AppData/Roaming/Zed/
 {{ end }}
