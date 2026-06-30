@@ -41,6 +41,8 @@
     "context": "VimControl && !menu",
     "bindings": {
       "space": null,
+      // hate typing :Q instead of :q
+      "enter": "command_palette::Toggle",
 
       // make arrow keys wrapping
       "left": "vim::WrappingLeft",
@@ -66,7 +68,7 @@
       "s": "vim::PushSneak",
       "shift-s": "vim::PushSneakBackward",
       "/": "vim::Search",
-      "shift-/": "pane::DeploySearch",
+      "shift-/": "text_finder::Toggle",
 
       // "space" commands
       "space i": "editor::ToggleInlayHints",
@@ -121,6 +123,25 @@
       "b": "vim::MiniBrackets",
     },
   },
+  // surroundings (I use default keybind s for sneaks)
+  {
+    "context": "vim_operator == y",
+    "bindings": {
+      "ctrl-s": "vim::PushAddSurrounds",
+    },
+  },
+  {
+    "context": "vim_operator == c",
+    "bindings": {
+      "ctrl-s": "vim::PushChangeSurrounds",
+    },
+  },
+  {
+    "context": "vim_operator == d",
+    "bindings": {
+      "ctrl-s": "vim::PushDeleteSurrounds",
+    },
+  },
   {
     "context": "VimControl && !menu || !Editor && !Terminal",
     "bindings": {
@@ -160,22 +181,28 @@
       "space l": "lsp_tool::ToggleMenu",
       "space n": "project_panel::ToggleFocus",
       "space o": "outline_panel::ToggleFocus",
+      "space g": "git_panel::ToggleFocus",
+      "space shift-t": "terminal_panel::ToggleFocus",
       "space t": "task::Spawn",
       "space space": "file_finder::Toggle",
       "space p": "projects::OpenRecent",
-      "space d f": "debug_panel::ToggleFocus",
-      "space d s": "debugger::Start",
-      "space d shift-s": "debugger::Stop",
-      "space d r": "debugger::RerunSession",
-      "space d p": "debugger::Pause",
-      "space d o": "debugger::StepOver",
-      "space d shift-o": "debugger::StepOut",
-      "space b": "editor::ToggleBreakpoint",
+      "space r": "projects::OpenRemote",
+      "space d": "debug_panel::ToggleFocus",
+
+      "z d f": "debug_panel::ToggleFocus",
+      "z d s": "debugger::Start",
+      "z d shift-s": "debugger::Stop",
+      "z d r": "debugger::RerunSession",
+      "z d p": "debugger::Pause",
+      "z d o": "debugger::StepOver",
+      "z d shift-o": "debugger::StepOut",
+      "z d b": "editor::ToggleBreakpoint",
+
       "space s": "workspace::ToggleWorktreeSecurity",
 
       "g shift-s": "project_symbols::Toggle",
       "g shift-e": "diagnostics::Deploy",
-      "g shift-/": "pane::DeploySearch",
+      "g /": "pane::DeploySearch",
       "g b": "git::Blame",
       "g m": "editor::OpenContextMenu",
     },
@@ -185,6 +212,41 @@
     "use_key_equivalents": true,
     "bindings": {
       "space d c": "debugger::Continue",
+    },
+  },
+  {
+    "context": "(Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu) || (!Editor && !Terminal)",
+    "bindings": {
+      "F10": null,
+      "F11": null,
+
+      "F3": "task::Spawn",
+      "F4": "debugger::Start",
+      "F5": "debugger::Rerun",
+      "shift-F5": "debugger::Stop",
+      "F10 i": "debugger::StepInto",
+      "F10 b": "debugger::StepBack",
+      "F10 o": "debugger::StepOut",
+      "F10 shift-o": "debugger::StepOver",
+      "F11 v": "debugger::FocusVariables",
+      "F11 f": "debugger::FocusFrames",
+      "F11 c": "debugger::FocusConsole",
+      "F11 m": "debugger::FocusModules",
+      "F11 t": "debugger::FocusTerminal",
+      "F11 b": "debugger::FocusBreakpointList",
+    },
+  },
+  {
+    "context": "Workspace && debugger_stopped",
+    "bindings": {
+      "F5": "debugger::Continue",
+    },
+  },
+  // HACK: there is no way to unfocus editor in places like Extensions or Keymap Editor
+  {
+    "context": "!(Pane && buffer_search_deployed) && BufferSearchBar > Editor",
+    "bindings": {
+      "enter": "command_palette::Toggle",
     },
   },
 ]

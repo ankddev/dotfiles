@@ -1,10 +1,13 @@
 {
-  "current_line_highlight": "all",
+  "document_folding_ranges": "on",
+  "scrollbar": {
+    "show": "always",
+  },
   "gutter": {
-    "folds": true,
+    "folds": false,
+    "runnables": false,
     "min_line_number_digits": 0,
   },
-  "ui_font_weight": 400.0,
   "allow_rewrap": "anywhere",
   "mouse_wheel_zoom": true,
   "code_lens": "on",
@@ -16,7 +19,25 @@
       "args": [],
       "projects": [
         {
+          "paths": ["/home/codespace"],
+        },
+        {
           "paths": ["/workspaces/gleam"],
+        },
+        {
+          "paths": ["/workspaces/gleam-language-tour"],
+        },
+        {
+          "paths": ["/workspaces/gleam-playground"],
+        },
+        {
+          "paths": ["/workspaces/ruff"],
+        },
+        {
+          "paths": ["/workspaces/testing"],
+        },
+        {
+          "paths": ["/workspaces/website"],
         },
       ],
     },
@@ -28,6 +49,27 @@
           "paths": ["/workspaces/ruff"],
         },
       ],
+    },
+    {
+      "host": "cs-ruff",
+      "args": [],
+      "projects": [],
+    },
+    {
+      "host": "100.69.200.57",
+      "username": "u0_a70",
+      "port": 8022,
+      "args": [],
+      "projects": [
+        {
+          "paths": ["/data/data/com.termux/files/home/darkline.nvim"],
+        },
+      ],
+    },
+    {
+      "host": "cs-website",
+      "args": [],
+      "projects": [],
     },
   ],
   "base_keymap": "VSCode",
@@ -48,6 +90,8 @@
     "highlight_on_yank_duration": 200,
     "use_smartcase_find": true,
     "toggle_relative_line_numbers": true,
+    // TODO: migrate to helix-style no-system-clipboard workflow
+    // "use_system_clipboard": "never",
   },
   "minimap": {
     "show": "never",
@@ -55,6 +99,7 @@
   "scroll_beyond_last_line": "vertical_scroll_margin",
   "expand_excerpt_lines": 10,
   "status_bar": {
+    "line_endings_button": true,
     "active_encoding_button": "enabled",
   },
   "autoscroll_on_clicks": false,
@@ -86,29 +131,23 @@
   },
   "hide_mouse": "never",
   "ui_font_family": "Maple Mono NF",
+  "ui_font_size": 16.0,
+  "ui_font_weight": 400.0,
   "project_panel": {
-    "indent_guides": {
-      "show": "never",
-    },
+    "file_icons": true,
+    "folder_icons": false,
     "dock": "right",
     "git_status_indicator": true,
     "diagnostic_badges": true,
-    "sort_mode": "directories_first",
-    "bold_folder_labels": true,
     "auto_fold_dirs": false,
     "starts_open": false,
     "scrollbar": {
       "show": "always",
     },
     "indent_size": 20.0,
-    "folder_icons": true,
-    "entry_spacing": "comfortable",
-    "default_width": 240.0,
-    "hide_root": false,
+    "default_width": 400,
   },
   "indent_guides": {
-    "background_coloring": "disabled",
-    "line_width": 1,
     "coloring": "indent_aware",
     "active_line_width": 2,
   },
@@ -119,10 +158,6 @@
   "show_signature_help_after_edits": true,
   "auto_signature_help": true,
   "show_whitespaces": "all",
-  "telemetry": {
-    "diagnostics": true,
-    "metrics": true,
-  },
   "use_system_path_prompts": false,
   "debugger": {
     "dock": "bottom",
@@ -164,7 +199,6 @@
   "icon_theme": "Catppuccin Mocha",
   "vim_mode": true,
   "theme": "Catppuccin Mocha",
-  "ui_font_size": 16.0,
   "buffer_font_size": 13.0,
   "use_system_prompts": false,
   "title_bar": {
@@ -239,35 +273,39 @@
     "delay_ms": 0,
   },
   "theme_overrides": {
-    // "Catppuccin Mocha": {
-    //   "border": "#1e1e2e",
-    //   "border.variant": "#1e1e2e",
-    //   "border.focused": "#1e1e2e",
-    //   "border.selected": "#1e1e2e",
-    //   "border.transparent": "#1e1e2e",
-    //   "status_bar.background": "#1e1e2e",
-    //   "title_bar.background": "#1e1e2e",
-    //   "title_bar.inactive_background": "#171725",
-    //   "panel.background": "#1e1e2e",
-    //   "scrollbar.track.background": "#1e1e2e",
-    //   "scrollbar.track.border": "#1e1e2e",
-    // },
-    // "Aura Dark": {
-    //   "editor.document_highlight.read_background": "#00000000",
-    //   "editor.document_highlight.write_background": "#00000000",
-    //   "border.variant": "#15141C",
-    //   "border": "#15141C",
-    //   "title_bar.background": "#15141C",
-    //   "panel.background": "#15141C",
-    //   "panel.focused_border": "#4E466E",
-    //   "syntax": {
-    //     "comment": {
-    //       "font_style": "italic",
-    //     },
-    //     "comment.doc": {
-    //       "font_style": "italic",
-    //     },
-    //   },
-    // },
+    "Catppuccin Mocha": {
+      "border.variant": "#313244",
+      "status_bar.background": "#1e1e2e",
+      "title_bar.background": "#1e1e2e",
+      "title_bar.inactive_background": "#171725",
+      "panel.background": "#1e1e2e",
+      "background": "#1e1e2e",
+      "scrollbar.track.background": "#1e1e2e",
+      "tab_bar.background": "#1e1e2e",
+      "tab.inactive_background": "#1e1e2e",
+      "syntax": {
+        "boolean": {
+          "font_style": "italic",
+        },
+        "number.float": {
+          "font_style": "italic",
+        },
+        "number": {
+          "font_style": "italic",
+        },
+        "keyword.return": {
+          "font_style": "italic",
+        },
+        "keyword.coroutine": {
+          "font_style": "italic",
+        },
+        "keyword.export": {
+          "font_style": "italic",
+        },
+      },
+    },
+  },
+  "command_aliases": {
+    "ext": "zed::Extensions",
   },
 }
