@@ -15,12 +15,14 @@ AppData/
 {{ end }}
 
 # Linux-specific
-{{ if and (ne .chezmoi.os "linux") }}
+{{ if (ne .chezmoi.os "linux") }}
+.config/nushell/
 .chezmoiscripts/linux/*
 {{ end }}
 
 # Android-specific
-{{ if and (ne .chezmoi.os "android") }}
+{{ if (ne .chezmoi.os "android") }}
+.config/nushell/
 .chezmoiscripts/linux/*
 .chezmoiscripts/android/*
 {{ end }}
