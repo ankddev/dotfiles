@@ -1,0 +1,126 @@
+" vim: ft=vimscript:
+" VIM config by ankddev
+" https://github.com/ankddev/dotfiles
+" Determine the data directory for vim-plug installation
+if has('nvim')
+  let s:data_dir = stdpath('data')
+else
+  if has('win32') || has('win64')
+    " On Windows Vim, use $HOME/vimfiles as data directory
+    let s:data_dir = expand('$HOME') . '\vimfiles'
+  else
+    " On Unix-like Vim, use ~/.vim
+    let s:data_dir = expand('~/.vim')
+  endif
+endif
+
+let s:plug_path = s:data_dir . '/autoload/plug.vim'
+
+" Install vim-plug if not installed
+if empty(glob(s:plug_path))
+  " Use curl to download plug.vim, create directories if needed
+  silent execute '!curl -fLo ' . shellescape(s:plug_path) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+  " Run PlugInstall once after Vim starts
+  autocmd VimEnter * ++once PlugInstall | source $MYVIMRC
+endif
+
+" Set langauge to english
+if has('unix')
+    language messages C
+else
+    language messages en
+endif
+
+" Space settings
+set expandtab
+set smarttab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+" Show line numbers
+set relativenumber number
+" Highlight current line
+set cursorline
+" Enable syntax highlighting
+syntax on
+" Disable Vi compatibility
+set nocompatible
+" Show partial command you type in the last line of the screen.
+set showcmd
+" Show matching words during a search.
+set showmatch
+" Use highlighting when doing a search.
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmatch
+" Allow hidden buffers
+set hidden
+" Clipboard control
+set clipboard=unnamed,unnamedplus
+" Completion
+set wildmenu
+set wildmode=list:longest
+set wildignore=.docx,.jpg,.png,.gif,.pdf,.pyc,.exe,.flv,.img,.xlsx
+set nu
+set ruler
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * silent! checktime
+" Confirm before closing file with unsaved changes
+set confirm
+" Undo
+set undofile
+set undodir=~/.temp
+" Save all buffers when Vim loses focus
+au FocusLost * silent! wa
+" Set the commands to save in history default number is 20.
+set history=1000
+" Enable filetype checking
+filetype on
+filetype plugin indent on
+" Backspace setting
+set backspace=indent,eol,start
+set whichwrap+=<,>,[,]
+" No wrap
+set nowrap
+" Disable bells
+set noerrorbells
+set novisualbell
+" enable mouse support
+set mouse=a
+" Highlight 110 collumn
+set colorcolumn=110
+" Enable more colors
+set termguicolors
+" Plugins via https://github.com/junegunn/vim-plug
+call plug#begin()
+" Catppuccin theme
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+" Language support
+Plug 'sheerun/vim-polyglot'
+" Justfule support
+Plug 'NoahTheDuke/vim-just'
+" Airline
+Plug 'vim-airline/vim-airline'
+    let g:airline_powerline_fonts = 1
+" Wakatime
+Plug 'wakatime/vim-wakatime'
+call plug#end()
+" Apply theme
+silent! colorscheme catppuccin_mocha
+" You can split a window into sections by typing `:split` or `:vsplit`.
+" Display cursorline and cursorcolumn ONLY in active window.
+augroup cursor_off
+        autocmd!
+            autocmd WinLeave * set nocursorline
+                autocmd WinEnter * set cursorline
+augroup END
