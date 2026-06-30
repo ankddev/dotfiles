@@ -1,5 +1,0 @@
-add-bounds = "major"
-preview = true
-
-[pip]
-verify-hashes = true
