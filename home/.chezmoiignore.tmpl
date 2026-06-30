@@ -17,12 +17,14 @@ AppData/
 # Linux-specific
 {{ if (ne .chezmoi.os "linux") }}
 .config/nushell/
+.config/jj/
 .chezmoiscripts/linux/*
 {{ end }}
 
 # Android-specific
 {{ if (ne .chezmoi.os "android") }}
 .config/nushell/
+.config/jj/
 .chezmoiscripts/linux/*
 .chezmoiscripts/android/*
 {{ end }}

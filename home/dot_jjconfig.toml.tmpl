@@ -1,0 +1,112 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[ui]
+editor = "nvim"
+default-command = ["status"]
+diff-formatter = ":git"
+# diff-formatter = ["difft", "--color=always", "$left", "$right"]
+conflict-marker-style = "git"
+
+[aliases]
+# Log pending changes
+l = ["log", "-r", "(trunk()..@):: | (trunk()..@)-"]
+n = ["new"]
+nt = ["new", "trunk()"]
+d = ["diff"]
+s = ["show"]
+# Take content from any change, and move it into @.
+# - jj consume xyz path/to/file`
+consume = ["squash", "--into", "@", "--from"]
+# Eject content from @ into any other change.
+# - jj eject xyz --interactive
+eject = ["squash", "--from", "@", "--into"]
+# Retrunk the current stack of work
+retrunk = [
+  "rebase",
+  "-d",
+  "trunk()",
+  "-s",
+  "roots(trunk()..ancestors(reachable(@, mutable()), 2))",
+]
+
+[colors]
+# Used by log node template
+"node" = "default"
+"node empty" = "bright black"
+"node elided" = { fg = "bright black", bold = true }
+"node working_copy" = { fg = "green", bold = true }
+"node conflict" = { fg = "red", bold = true }
+"node immutable" = { fg = "bright cyan", bold = true }
+"node wip" = { fg = "yellow", bold = true }
+
+[snapshot]
+auto-update-stale = true
+
+[signing]
+behavior = "drop"
+
+[git]
+sign-on-push = true
+
+[revset-aliases]
+# 'trunk()' = '''
+# latest(
+#   (
+#     present(exact:"main") |
+#     present(exact:"master") |
+#     present(exact:"trunk") |
+#     present(exact:"dev")
+#   ) & remote_bookmarks(),
+#   root()
+# )
+# '''
+# Will probably need to be customized per-repo
+'trunk()' = '''
+latest(
+  present(remote_bookmarks(exact:"main")) |
+  present(remote_bookmarks(exact:"master")) |
+  present(remote_bookmarks(exact:"trunk")) |
+  present(remote_bookmarks(exact:"dev")) |
+  root()
+)
+'''
+'user(x)' = 'author(x) | committer(x)'
+'wip()' = 'description(glob:"wip:*") | description(glob:"WIP:*")'
+
+[templates]
+config_list = "builtin_config_list_detailed"
+log_node = '''
+coalesce(
+  if(!self, label("elided", "~")),
+  label(
+    separate(" ",
+      "node",
+      if(current_working_copy, "working_copy"),
+      if(empty, "empty"),
+      if(immutable, "immutable", "mutable"),
+      if(conflict, "conflict"),
+      if(description.lower().starts_with("wip:"), "wip"),
+    ),
+    coalesce(
+      if(current_working_copy, "@"),
+      if(immutable, "◆"),
+      if(conflict, "×"),
+      if(description.lower().starts_with("wip:"), "!"),
+      if(empty, "○"),
+      "●",
+    )
+  )
+)
+'''
+op_log_node = '''
+coalesce(
+  if(current_operation, label("current_operation", "@")),
+  "●",
+)
+'''
+
+['template-aliases']
+# I like short change IDs, but normal commit IDs
+'format_short_change_id(id)' = "id.shortest()"
+'format_short_operation_id(id)' = "id.short(4)"
+'format_timestamp(timestamp)' = "timestamp.ago()"
