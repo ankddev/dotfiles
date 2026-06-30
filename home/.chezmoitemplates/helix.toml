@@ -11,6 +11,11 @@ insert = "bar"
 normal = "block"
 select = "underline"
 
+[editor.statusline.mode]
+normal = "\ue62b N"
+insert = "\ue62b I"
+select = "\ue62b S"
+
 [editor.statusline]
 left = [
   "mode",
